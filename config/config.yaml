@@ -1,0 +1,15 @@
+server:
+  host: "0.0.0.0"
+  port: 8080
+
+database:
+  host: "127.0.0.1"
+  port: 3306
+  user: "root"
+  password: ""
+  name: "cpp_oj"
+  pool_size: 4
+
+logger:
+  level: "INFO"
+  file: "logs/oj.log"
