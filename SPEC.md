@@ -156,11 +156,9 @@ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 - [X] 项⽬ 录结构搭建
 - [X] MySQL 数据库初始化脚本
 - [X] cpp-httplib 基础 HTTP 服务
-- [ ] 配置管理
-- [ ] ⽇志
-- [ ] 数据库连接
-- [ ] ⽇志封装
-- [ ] 数据库连接池实现
+- [X] 配置管理
+- [X] ⽇志封装
+- [X] 数据库连接池实现
 ### Phase 2 - 题⽬模块
 - [ ] 题⽬ CRUD API（管理员）
 - [ ] 题⽬列表/详情 API（⽤⼾）
