@@ -39,3 +39,26 @@ add_unit_test(connection_pool_test
     ${CMAKE_SOURCE_DIR}/src/db/connection_pool.cc
     ${CMAKE_SOURCE_DIR}/src/utils/logger.cc
 )
+
+add_unit_test(problem_mapper_test
+    unit/problem_mapper_test.cc
+    ${CMAKE_SOURCE_DIR}/src/model/problem.cc
+    ${CMAKE_SOURCE_DIR}/src/model/test_case.cc
+    ${CMAKE_SOURCE_DIR}/src/db/connection_pool.cc
+    ${CMAKE_SOURCE_DIR}/src/utils/logger.cc
+)
+
+add_unit_test(test_case_mapper_test
+    unit/test_case_mapper_test.cc
+    ${CMAKE_SOURCE_DIR}/src/model/test_case.cc
+    ${CMAKE_SOURCE_DIR}/src/model/problem.cc
+    ${CMAKE_SOURCE_DIR}/src/db/connection_pool.cc
+    ${CMAKE_SOURCE_DIR}/src/utils/logger.cc
+)
+
+add_unit_test(user_mapper_test
+    unit/user_mapper_test.cc
+    ${CMAKE_SOURCE_DIR}/src/model/user.cc
+    ${CMAKE_SOURCE_DIR}/src/db/connection_pool.cc
+    ${CMAKE_SOURCE_DIR}/src/utils/logger.cc
+)

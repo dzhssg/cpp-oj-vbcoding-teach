@@ -160,9 +160,9 @@ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 - [X] ⽇志封装
 - [X] 数据库连接池实现
 ### Phase 2 - 题⽬模块
+- [ ] 题⽬数据模型映射
 - [ ] 题⽬ CRUD API（管理员）
 - [ ] 题⽬列表/详情 API（⽤⼾）
-- [ ] 题⽬数据模型映射
 ### Phase 3 - 代码执⾏模块
 - [ ] C++ 代码编译（fork + g++）
 - [ ] 代码运⾏ + 超时控制
