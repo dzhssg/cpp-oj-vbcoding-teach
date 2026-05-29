@@ -11,7 +11,7 @@ find_package(OpenSSL REQUIRED)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(MYSQL REQUIRED mysqlclient)
 
-# ── FetchContent: cpp-httplib / nlohmann::json / bcrypt ─────────────
+# ── FetchContent: cpp-httplib / nlohmann::json ─────────────
 
 include(FetchContent)
 
@@ -28,13 +28,6 @@ FetchContent_Declare(
     GIT_TAG        v3.11.3
 )
 FetchContent_MakeAvailable(json)
-
-FetchContent_Declare(
-    Bcrypt
-    GIT_REPOSITORY https://github.com/hilch/Bcrypt.cpp.git
-    GIT_TAG        V1.0_OPENBSD
-)
-FetchContent_MakeAvailable(Bcrypt)
 
 # ── Source files ─────────────────────────────────────────────────────
 
@@ -59,6 +52,8 @@ set(SOURCES
 
 # ── Executable ───────────────────────────────────────────────────────
 
+link_directories(${MYSQL_LIBRARY_DIRS})
+
 add_executable(oj_server ${SOURCES})
 
 target_include_directories(oj_server PRIVATE
@@ -72,7 +67,6 @@ target_link_libraries(oj_server PRIVATE
     OpenSSL::Crypto
     httplib::httplib
     nlohmann_json::nlohmann_json
-    Bcrypt
     ${MYSQL_LIBRARIES}
     pthread
 )
