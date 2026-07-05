@@ -50,6 +50,7 @@ set(SOURCES
     src/db/connection_pool.cc
     src/utils/logger.cc
     src/utils/config.cc
+    src/utils/bcrypt.cpp
 )
 
 # ── Executable ───────────────────────────────────────────────────────

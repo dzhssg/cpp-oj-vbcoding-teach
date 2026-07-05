@@ -169,9 +169,9 @@ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 - [X] 结果⽐较（stdout vs expected）
 - [X] 进程级资源限制（CPU/内存）
 ### Phase 4 - 登录注册模块
-- [ ] Session/Cookie 认证机制
-- [ ] ⽤⼾注册 API（⽤⼾名唯⼀性校验）
-- [ ] ⽤⼾登录 API
+- [X] Session/Cookie 认证机制
+- [X] ⽤⼾注册 API（⽤⼾名唯⼀性校验）
+- [X] ⽤⼾登录 API
 ### Phase 5 - 前端
 - [ ] 登录⻚⾯ (`/login.html`)
 - [ ] 注册⻚⾯ (`/register.html`)

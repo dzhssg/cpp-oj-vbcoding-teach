@@ -80,3 +80,39 @@ add_unit_test(executor_service_test
     ${CMAKE_SOURCE_DIR}/src/db/connection_pool.cc
     ${CMAKE_SOURCE_DIR}/src/utils/logger.cc
 )
+
+add_unit_test(session_mapper_test
+    unit/session_mapper_test.cc
+    ${CMAKE_SOURCE_DIR}/src/model/session.cc
+    ${CMAKE_SOURCE_DIR}/src/db/connection_pool.cc
+    ${CMAKE_SOURCE_DIR}/src/utils/logger.cc
+)
+
+add_unit_test(session_service_test
+    unit/session_service_test.cc
+    ${CMAKE_SOURCE_DIR}/src/service/session_service.cc
+    ${CMAKE_SOURCE_DIR}/src/model/session.cc
+    ${CMAKE_SOURCE_DIR}/src/model/user.cc
+    ${CMAKE_SOURCE_DIR}/src/db/connection_pool.cc
+    ${CMAKE_SOURCE_DIR}/src/utils/logger.cc
+)
+target_link_libraries(session_service_test PRIVATE OpenSSL::SSL OpenSSL::Crypto)
+
+add_unit_test(auth_handler_test
+    unit/auth_handler_test.cc
+    ${CMAKE_SOURCE_DIR}/src/handler/auth_handler.cc
+    ${CMAKE_SOURCE_DIR}/src/service/auth_service.cc
+    ${CMAKE_SOURCE_DIR}/src/service/session_service.cc
+    ${CMAKE_SOURCE_DIR}/src/model/session.cc
+    ${CMAKE_SOURCE_DIR}/src/model/user.cc
+    ${CMAKE_SOURCE_DIR}/src/utils/bcrypt.cpp
+    ${CMAKE_SOURCE_DIR}/src/db/connection_pool.cc
+    ${CMAKE_SOURCE_DIR}/src/utils/logger.cc
+)
+target_link_libraries(auth_handler_test PRIVATE OpenSSL::SSL OpenSSL::Crypto nlohmann_json::nlohmann_json)
+
+add_unit_test(bcrypt_test
+    unit/bcrypt_test.cc
+    ${CMAKE_SOURCE_DIR}/src/utils/bcrypt.cpp
+)
+target_link_libraries(bcrypt_test PRIVATE OpenSSL::SSL OpenSSL::Crypto)
