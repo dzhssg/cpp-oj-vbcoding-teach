@@ -17,6 +17,7 @@ public:
 
     static int insert(const User &user);
     static User findByUsername(const std::string &username);
+    static User findById(int id);
 };
 
 #endif

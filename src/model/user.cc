@@ -80,3 +80,39 @@ User UserMapper::findByUsername(const std::string &username) {
 
     return user;
 }
+
+User UserMapper::findById(int id) {
+    User user;
+
+    ScopedConnection db;
+    MYSQL *conn = db.get();
+    if (!conn) {
+        LOG_ERROR("[USER] No database connection for findById");
+        return user;
+    }
+
+    std::ostringstream sql;
+    sql << "SELECT id, username, password, role, created_at "
+        << "FROM users WHERE id = " << id;
+
+    if (mysql_query(conn, sql.str().c_str()) != 0) {
+        LOG_ERROR("[USER] findById query failed: "
+                  + std::string(mysql_error(conn)));
+        return user;
+    }
+
+    MYSQL_RES *result = mysql_store_result(conn);
+    if (!result) return user;
+
+    MYSQL_ROW row = mysql_fetch_row(result);
+    if (row) {
+        user.id = std::stoi(row[0]);
+        user.username = row[1] ? row[1] : "";
+        user.password = row[2] ? row[2] : "";
+        user.role = row[3] ? row[3] : "";
+        user.created_at = row[4] ? row[4] : "";
+    }
+    mysql_free_result(result);
+
+    return user;
+}

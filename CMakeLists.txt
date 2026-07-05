@@ -45,6 +45,7 @@ set(SOURCES
     src/model/problem.cc
     src/model/test_case.cc
     src/model/user.cc
+    src/model/session.cc
     src/db/connection_pool.cc
     src/utils/logger.cc
     src/utils/config.cc
