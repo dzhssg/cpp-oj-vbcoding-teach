@@ -4,6 +4,7 @@
 
 #include <string>
 
+#include "handler/auth_handler.h"
 #include "model/problem.h"
 #include "model/test_case.h"
 #include "service/problem_service.h"
@@ -13,6 +14,11 @@ using json = nlohmann::json;
 
 void handleAdminCreateProblem(const httplib::Request &req, httplib::Response &res) {
     LOG_DEBUG("[ADMIN] POST /api/admin/problems");
+
+    SessionUser user;
+    if (!requireAdmin(req, res, user)) {
+        return;
+    }
 
     json body;
     try {
@@ -76,6 +82,11 @@ void handleAdminCreateProblem(const httplib::Request &req, httplib::Response &re
 
 void handleAdminDeleteProblem(const httplib::Request &req, httplib::Response &res) {
     LOG_DEBUG("[ADMIN] DELETE /api/admin/problems/:id");
+
+    SessionUser user;
+    if (!requireAdmin(req, res, user)) {
+        return;
+    }
 
     int id = std::stoi(req.matches[1].str());
 

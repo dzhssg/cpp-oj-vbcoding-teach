@@ -42,9 +42,11 @@ set(SOURCES
     src/service/problem_service.cc
     src/service/executor_service.cc
     src/service/auth_service.cc
+    src/service/session_service.cc
     src/model/problem.cc
     src/model/test_case.cc
     src/model/user.cc
+    src/model/session.cc
     src/db/connection_pool.cc
     src/utils/logger.cc
     src/utils/config.cc

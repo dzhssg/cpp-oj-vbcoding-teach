@@ -164,14 +164,14 @@ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 - [X] 题⽬ CRUD API（管理员）
 - [X] 题⽬列表/详情 API（⽤⼾）
 ### Phase 3 - 代码执⾏模块
-- [ ] C++ 代码编译（fork + g++）
-- [ ] 代码运⾏ + 超时控制
-- [ ] 结果⽐较（stdout vs expected）
-- [ ] 进程级资源限制（CPU/内存）
+- [X] C++ 代码编译（fork + g++）
+- [X] 代码运⾏ + 超时控制
+- [X] 结果⽐较（stdout vs expected）
+- [X] 进程级资源限制（CPU/内存）
 ### Phase 4 - 登录注册模块
+- [ ] Session/Cookie 认证机制
 - [ ] ⽤⼾注册 API（⽤⼾名唯⼀性校验）
 - [ ] ⽤⼾登录 API
-- [ ] Session/Cookie 认证机制
 ### Phase 5 - 前端
 - [ ] 登录⻚⾯ (`/login.html`)
 - [ ] 注册⻚⾯ (`/register.html`)
