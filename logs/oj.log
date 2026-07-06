@@ -1,0 +1,110 @@
+[2026-07-06 14:47:30.326] [INFO] [MAIN] Starting cpp-oj server...
+[2026-07-06 14:47:30.604] [INFO] [DB POOL] Initialized with 4 connections (requested 4)
+[2026-07-06 14:47:30.604] [INFO] [MAIN] Database connection pool initialized
+[2026-07-06 14:47:30.605] [INFO] [AUTH] Started background session cleanup (interval=1800s)
+[2026-07-06 14:47:30.605] [INFO] [SERVER] Listening on 0.0.0.0:8080
+[2026-07-06 14:53:29.358] [INFO] [USER] Inserted user id=81
+[2026-07-06 14:53:40.445] [INFO] [USER] Inserted user id=82
+[2026-07-06 14:53:47.763] [INFO] [SESSION] Created session for user_id=81
+[2026-07-06 14:53:48.075] [INFO] [SESSION] Created session for user_id=82
+[2026-07-06 14:53:53.775] [INFO] [SESSION] Created session for user_id=81
+[2026-07-06 14:57:43.072] [INFO] [MAIN] Starting cpp-oj server...
+[2026-07-06 14:57:43.966] [INFO] [DB POOL] Initialized with 4 connections (requested 4)
+[2026-07-06 14:57:43.966] [INFO] [MAIN] Database connection pool initialized
+[2026-07-06 14:57:43.967] [INFO] [AUTH] Started background session cleanup (interval=1800s)
+[2026-07-06 14:57:43.967] [INFO] [SERVER] Listening on 0.0.0.0:8080
+[2026-07-06 14:59:53.511] [INFO] [USER] Inserted user id=83
+[2026-07-06 15:00:02.510] [INFO] [SESSION] Created session for user_id=83
+[2026-07-06 15:00:02.841] [INFO] [USER] Inserted user id=84
+[2026-07-06 15:00:03.372] [INFO] [SESSION] Created session for user_id=84
+[2026-07-06 15:00:17.505] [INFO] [SESSION] Destroyed session 82bf202e9f17e7398b886c22e42cc449ee7c8199b4bfca56901722b87daf9354
+[2026-07-06 15:00:18.006] [INFO] [SESSION] Created session for user_id=83
+[2026-07-06 15:00:18.476] [INFO] [PROBLEM] Inserted problem id=1 with 3 test cases
+[2026-07-06 15:00:30.466] [WARN] [SERVICE] Problem not found: id=99999
+[2026-07-06 15:00:40.468] [INFO] [PROBLEM] Deleted problem id=99999
+[2026-07-06 15:00:40.468] [WARN] [SERVICE] Failed to delete problem: id=99999
+[2026-07-06 15:00:40.505] [INFO] [PROBLEM] Deleted problem id=1
+[2026-07-06 15:00:40.586] [WARN] [SERVICE] Problem not found: id=1
+[2026-07-06 16:06:53.051] [INFO] [MAIN] Starting cpp-oj server...
+[2026-07-06 16:06:54.265] [INFO] [DB POOL] Initialized with 4 connections (requested 4)
+[2026-07-06 16:06:54.265] [INFO] [MAIN] Database connection pool initialized
+[2026-07-06 16:06:54.266] [INFO] [AUTH] Started background session cleanup (interval=1800s)
+[2026-07-06 16:06:54.266] [INFO] [SERVER] Listening on 0.0.0.0:8080
+[2026-07-06 16:09:36.231] [INFO] [USER] Inserted user id=85
+[2026-07-06 16:09:36.986] [INFO] [USER] Inserted user id=86
+[2026-07-06 16:09:38.114] [INFO] [SESSION] Created session for user_id=85
+[2026-07-06 16:09:38.744] [INFO] [SESSION] Created session for user_id=86
+[2026-07-06 16:09:39.609] [INFO] [PROBLEM] Inserted problem id=2 with 3 test cases
+[2026-07-06 16:09:39.789] [INFO] [PROBLEM] Inserted problem id=3 with 4 test cases
+[2026-07-06 16:09:40.686] [WARN] [SERVICE] Problem not found: id=9999
+[2026-07-06 16:10:35.459] [INFO] [PROBLEM] Deleted problem id=999
+[2026-07-06 16:10:35.476] [WARN] [SERVICE] Failed to delete problem: id=999
+[2026-07-06 16:10:35.638] [INFO] [PROBLEM] Deleted problem id=3
+[2026-07-06 16:10:35.677] [WARN] [SERVICE] Problem not found: id=3
+[2026-07-06 16:10:38.578] [INFO] [PROBLEM] Deleted problem id=2
+[2026-07-06 16:12:08.856] [INFO] [MAIN] Starting cpp-oj server...
+[2026-07-06 16:12:13.352] [INFO] [DB POOL] Initialized with 4 connections (requested 4)
+[2026-07-06 16:12:13.352] [INFO] [MAIN] Database connection pool initialized
+[2026-07-06 16:12:13.352] [INFO] [AUTH] Started background session cleanup (interval=1800s)
+[2026-07-06 16:12:13.352] [INFO] [SERVER] Listening on 0.0.0.0:8080
+[2026-07-06 16:17:58.355] [INFO] [USER] Inserted user id=87
+[2026-07-06 16:17:58.909] [INFO] [USER] Inserted user id=88
+[2026-07-06 16:17:59.766] [INFO] [SESSION] Created session for user_id=87
+[2026-07-06 16:18:00.113] [INFO] [SESSION] Created session for user_id=88
+[2026-07-06 16:18:01.199] [INFO] [PROBLEM] Inserted problem id=4 with 3 test cases
+[2026-07-06 16:18:01.228] [INFO] [PROBLEM] Inserted problem id=5 with 0 test cases
+[2026-07-06 16:18:01.270] [INFO] [PROBLEM] Inserted problem id=6 with 0 test cases
+[2026-07-06 16:18:01.390] [INFO] [PROBLEM] Inserted problem id=7 with 3 test cases
+[2026-07-06 16:18:01.421] [INFO] [PROBLEM] Inserted problem id=8 with 0 test cases
+[2026-07-06 16:18:01.600] [WARN] [SERVICE] Problem not found: id=1
+[2026-07-06 16:18:01.669] [WARN] [SERVICE] Problem not found: id=99999
+[2026-07-06 16:18:02.186] [INFO] [PROBLEM] Deleted problem id=99999
+[2026-07-06 16:18:02.190] [WARN] [SERVICE] Failed to delete problem: id=99999
+[2026-07-06 16:18:02.243] [INFO] [PROBLEM] Deleted problem id=6
+[2026-07-06 16:18:02.307] [INFO] [PROBLEM] Deleted problem id=8
+[2026-07-06 16:18:02.342] [INFO] [PROBLEM] Deleted problem id=1
+[2026-07-06 16:18:02.343] [WARN] [SERVICE] Failed to delete problem: id=1
+[2026-07-06 16:18:02.397] [WARN] [SERVICE] Problem not found: id=1
+[2026-07-06 16:18:02.464] [INFO] [SESSION] Destroyed session 5b96dbde7166a32dac205599bb9e294ffc3a4852dd05864f055b9df79a630591
+[2026-07-06 16:18:18.389] [INFO] [MAIN] Starting cpp-oj server...
+[2026-07-06 16:18:19.398] [INFO] [DB POOL] Initialized with 4 connections (requested 4)
+[2026-07-06 16:18:19.401] [INFO] [MAIN] Database connection pool initialized
+[2026-07-06 16:18:19.402] [INFO] [AUTH] Started background session cleanup (interval=1800s)
+[2026-07-06 16:18:19.402] [INFO] [SERVER] Listening on 0.0.0.0:8080
+[2026-07-06 16:21:03.382] [INFO] [USER] Inserted user id=1
+[2026-07-06 16:21:03.723] [INFO] [USER] Inserted user id=2
+[2026-07-06 16:21:04.337] [INFO] [SESSION] Created session for user_id=1
+[2026-07-06 16:21:04.738] [INFO] [SESSION] Created session for user_id=2
+[2026-07-06 16:21:05.236] [INFO] [PROBLEM] Inserted problem id=1 with 3 test cases
+[2026-07-06 16:21:05.285] [INFO] [PROBLEM] Inserted problem id=2 with 0 test cases
+[2026-07-06 16:21:05.337] [INFO] [PROBLEM] Inserted problem id=3 with 0 test cases
+[2026-07-06 16:21:05.419] [INFO] [PROBLEM] Inserted problem id=4 with 3 test cases
+[2026-07-06 16:21:05.765] [WARN] [SERVICE] Problem not found: id=99999
+[2026-07-06 16:21:12.783] [INFO] [PROBLEM] Deleted problem id=99999
+[2026-07-06 16:21:12.788] [WARN] [SERVICE] Failed to delete problem: id=99999
+[2026-07-06 16:21:12.873] [INFO] [PROBLEM] Deleted problem id=4
+[2026-07-06 16:21:13.011] [WARN] [SERVICE] Problem not found: id=4
+[2026-07-06 16:21:13.098] [INFO] [SESSION] Destroyed session 17f0e081295e670dbaa53960ba05e86e842778a2c5634bd9b830d3f4f94a8647
+[2026-07-06 16:21:33.324] [INFO] [SESSION] Created session for user_id=2
+[2026-07-06 16:21:33.384] [INFO] [PROBLEM] Deleted problem id=2
+[2026-07-06 16:21:33.441] [INFO] [PROBLEM] Deleted problem id=3
+[2026-07-06 16:28:02.202] [INFO] [MAIN] Starting cpp-oj server...
+[2026-07-06 16:28:03.303] [INFO] [DB POOL] Initialized with 4 connections (requested 4)
+[2026-07-06 16:28:03.304] [INFO] [MAIN] Database connection pool initialized
+[2026-07-06 16:28:03.306] [INFO] [AUTH] Started background session cleanup (interval=1800s)
+[2026-07-06 16:28:03.306] [INFO] [SERVER] Listening on 0.0.0.0:8080
+[2026-07-06 16:49:58.467] [INFO] [USER] Inserted user id=1
+[2026-07-06 16:49:58.766] [INFO] [USER] Inserted user id=2
+[2026-07-06 16:49:59.742] [INFO] [SESSION] Created session for user_id=1
+[2026-07-06 16:50:00.073] [INFO] [SESSION] Created session for user_id=2
+[2026-07-06 16:50:00.614] [INFO] [PROBLEM] Inserted problem id=1 with 3 test cases
+[2026-07-06 16:50:00.647] [INFO] [PROBLEM] Inserted problem id=2 with 0 test cases
+[2026-07-06 16:50:00.733] [INFO] [PROBLEM] Inserted problem id=3 with 3 test cases
+[2026-07-06 16:50:00.921] [WARN] [SERVICE] Problem not found: id=99999
+[2026-07-06 16:50:05.335] [INFO] [PROBLEM] Deleted problem id=99999
+[2026-07-06 16:50:05.336] [WARN] [SERVICE] Failed to delete problem: id=99999
+[2026-07-06 16:50:05.400] [INFO] [PROBLEM] Deleted problem id=3
+[2026-07-06 16:50:05.464] [WARN] [SERVICE] Problem not found: id=3
+[2026-07-06 16:50:05.522] [INFO] [SESSION] Destroyed session 1728f5415fb5a4fcdc100362beb3d50d7e26249f136e0fa91fb6dcbf087a5c05
+[2026-07-06 16:50:05.777] [INFO] [SESSION] Created session for user_id=2
+[2026-07-06 16:50:05.895] [INFO] [PROBLEM] Deleted problem id=2

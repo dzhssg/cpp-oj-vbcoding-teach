@@ -84,6 +84,7 @@ add_unit_test(executor_service_test
 add_unit_test(session_mapper_test
     unit/session_mapper_test.cc
     ${CMAKE_SOURCE_DIR}/src/model/session.cc
+    ${CMAKE_SOURCE_DIR}/src/model/user.cc
     ${CMAKE_SOURCE_DIR}/src/db/connection_pool.cc
     ${CMAKE_SOURCE_DIR}/src/utils/logger.cc
 )

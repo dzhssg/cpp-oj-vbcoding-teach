@@ -1,9 +1,11 @@
 #include <gtest/gtest.h>
 
 #include <sstream>
+#include <string>
 
 #include "db/connection_pool.h"
 #include "model/session.h"
+#include "model/user.h"
 #include "utils/logger.h"
 
 namespace {
@@ -19,6 +21,7 @@ protected:
     void SetUp() override {
         Logger::getInstance().setLevel(LogLevel::ERROR);
         ConnectionPool::getInstance().init(kHost, kPort, kUser, kPass, kDb, 2);
+        createTestUsers();
     }
 
     void TearDown() override {
@@ -28,8 +31,24 @@ protected:
         for (const auto &sid : expired_sessions_) {
             deleteSession(sid);
         }
+        for (const auto &name : created_usernames_) {
+            deleteUser(name);
+        }
         ConnectionPool::getInstance().shutdown();
         Logger::getInstance().setLevel(LogLevel::INFO);
+    }
+
+    void createTestUsers() {
+        test_user_id_1_ = insertTestUser("test_mapper_user_1", "pass1");
+        test_user_id_2_ = insertTestUser("test_mapper_user_2", "pass2");
+    }
+
+    int insertTestUser(const std::string &username, const std::string &password) {
+        User u;
+        u.username = username;
+        u.password = password;
+        created_usernames_.push_back(username);
+        return UserMapper::insert(u);
     }
 
     void deleteSession(const std::string &id) {
@@ -38,6 +57,15 @@ protected:
         if (!conn) return;
         std::ostringstream sql;
         sql << "DELETE FROM sessions WHERE id = '" << id << "'";
+        mysql_query(conn, sql.str().c_str());
+    }
+
+    void deleteUser(const std::string &username) {
+        ScopedConnection db;
+        MYSQL *conn = db.get();
+        if (!conn) return;
+        std::ostringstream sql;
+        sql << "DELETE FROM users WHERE username = '" << username << "'";
         mysql_query(conn, sql.str().c_str());
     }
 
@@ -51,8 +79,11 @@ protected:
         mysql_query(conn, sql.str().c_str());
     }
 
+    int test_user_id_1_ = 0;
+    int test_user_id_2_ = 0;
     std::vector<std::string> created_sessions_;
     std::vector<std::string> expired_sessions_;
+    std::vector<std::string> created_usernames_;
 };
 
 }  // namespace
@@ -62,8 +93,8 @@ protected:
 TEST_F(SessionMapperTest, InsertReturnsTrue) {
     Session s;
     s.id = "test_session_id_001";
-    s.user_id = 1;
-    s.expires_at = "2099-12-31 23:59:59";
+    s.user_id = test_user_id_1_;
+    s.expires_at = "2037-12-31 23:59:59";
     created_sessions_.push_back(s.id);
 
     bool ok = SessionMapper::insert(s);
@@ -73,16 +104,16 @@ TEST_F(SessionMapperTest, InsertReturnsTrue) {
 TEST_F(SessionMapperTest, InsertDuplicateIdFails) {
     Session s;
     s.id = "test_dup_session";
-    s.user_id = 1;
-    s.expires_at = "2099-12-31 23:59:59";
+    s.user_id = test_user_id_1_;
+    s.expires_at = "2037-12-31 23:59:59";
     created_sessions_.push_back(s.id);
 
     ASSERT_TRUE(SessionMapper::insert(s));
 
     Session s2;
     s2.id = "test_dup_session";
-    s2.user_id = 2;
-    s2.expires_at = "2099-12-31 23:59:59";
+    s2.user_id = test_user_id_2_;
+    s2.expires_at = "2037-12-31 23:59:59";
     ASSERT_FALSE(SessionMapper::insert(s2));
 }
 
@@ -91,15 +122,15 @@ TEST_F(SessionMapperTest, InsertDuplicateIdFails) {
 TEST_F(SessionMapperTest, FindByIdReturnsCorrectData) {
     Session s;
     s.id = "test_find_session";
-    s.user_id = 42;
-    s.expires_at = "2099-12-31 23:59:59";
+    s.user_id = test_user_id_2_;
+    s.expires_at = "2037-12-31 23:59:59";
     created_sessions_.push_back(s.id);
     ASSERT_TRUE(SessionMapper::insert(s));
 
     Session found = SessionMapper::findById("test_find_session");
     ASSERT_EQ(found.id, "test_find_session");
-    ASSERT_EQ(found.user_id, 42);
-    ASSERT_EQ(found.expires_at, "2099-12-31 23:59:59");
+    ASSERT_EQ(found.user_id, test_user_id_2_);
+    ASSERT_EQ(found.expires_at, "2037-12-31 23:59:59");
     ASSERT_FALSE(found.created_at.empty());
 }
 
@@ -111,7 +142,7 @@ TEST_F(SessionMapperTest, FindByIdNotFoundReturnsEmpty) {
 
 TEST_F(SessionMapperTest, FindByIdExcludesExpired) {
     expired_sessions_.push_back("test_expired_session");
-    insertExpiredSession("test_expired_session", 1, "2020-01-01 00:00:00");
+    insertExpiredSession("test_expired_session", test_user_id_1_, "2020-01-01 00:00:00");
 
     Session found = SessionMapper::findById("test_expired_session");
     ASSERT_TRUE(found.id.empty());
@@ -122,8 +153,8 @@ TEST_F(SessionMapperTest, FindByIdExcludesExpired) {
 TEST_F(SessionMapperTest, DeleteByIdRemovesExisting) {
     Session s;
     s.id = "test_delete_session";
-    s.user_id = 1;
-    s.expires_at = "2099-12-31 23:59:59";
+    s.user_id = test_user_id_1_;
+    s.expires_at = "2037-12-31 23:59:59";
     created_sessions_.push_back(s.id);
     ASSERT_TRUE(SessionMapper::insert(s));
 
@@ -142,8 +173,8 @@ TEST_F(SessionMapperTest, DeleteByIdNonExistentReturnsFalse) {
 TEST_F(SessionMapperTest, DeleteExpiredRemovesExpiredSessions) {
     expired_sessions_.push_back("expired_1");
     expired_sessions_.push_back("expired_2");
-    insertExpiredSession("expired_1", 1, "2020-01-01 00:00:00");
-    insertExpiredSession("expired_2", 2, "2020-01-01 00:00:00");
+    insertExpiredSession("expired_1", test_user_id_1_, "2020-01-01 00:00:00");
+    insertExpiredSession("expired_2", test_user_id_2_, "2020-01-01 00:00:00");
 
     int removed = SessionMapper::deleteExpired();
     ASSERT_GE(removed, 2);
@@ -152,8 +183,8 @@ TEST_F(SessionMapperTest, DeleteExpiredRemovesExpiredSessions) {
 TEST_F(SessionMapperTest, DeleteExpiredPreservesActive) {
     Session s;
     s.id = "active_session_for_cleanup";
-    s.user_id = 1;
-    s.expires_at = "2099-12-31 23:59:59";
+    s.user_id = test_user_id_1_;
+    s.expires_at = "2037-12-31 23:59:59";
     created_sessions_.push_back(s.id);
     ASSERT_TRUE(SessionMapper::insert(s));
 

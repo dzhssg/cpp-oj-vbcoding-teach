@@ -74,6 +74,30 @@ target_link_libraries(oj_server PRIVATE
     pthread
 )
 
+# ── Tools ──────────────────────────────────────────────────────────────
+
+set(TOOL_SOURCES
+    src/db/connection_pool.cc
+    src/model/user.cc
+    src/utils/logger.cc
+    src/utils/config.cc
+    src/utils/bcrypt.cpp
+    tools/add_admin.cc
+)
+
+add_executable(add_admin ${TOOL_SOURCES})
+target_include_directories(add_admin PRIVATE
+    ${CMAKE_SOURCE_DIR}/src
+    ${MYSQL_INCLUDE_DIRS}
+)
+target_link_libraries(add_admin PRIVATE
+    yaml-cpp
+    OpenSSL::SSL
+    OpenSSL::Crypto
+    ${MYSQL_LIBRARIES}
+    pthread
+)
+
 # ── Tests (optional) ─────────────────────────────────────────────────
 
 option(BUILD_TESTS "Build unit tests" OFF)
