@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录 - OJ System</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="auth-page">
+
+  <div class="bg-grid"></div>
+
+  <div class="particles" aria-hidden="true">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <main class="container">
+    <div class="auth-card">
+
+      <div class="auth-header">
+        <div class="auth-logo">
+          <svg class="auth-logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="36" height="36" rx="8" stroke="currentColor" stroke-width="2.5" fill="none"/>
+            <path d="M12 26L12 14L18 20L24 14L28 20L28 26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <line x1="10" y1="30" x2="30" y2="30" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          <h1 class="auth-title">OJ System</h1>
+        </div>
+        <p class="auth-subtitle">&gt; cpp-oj login</p>
+      </div>
+
+      <div class="auth-divider">
+        <span class="auth-divider-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2"/>
+            <path d="M7 11V7a5 5 0 0110 0v4"/>
+            <circle cx="12" cy="16" r="1"/>
+          </svg>
+        </span>
+      </div>
+
+      <div id="alert" class="alert" role="alert" aria-live="polite"></div>
+
+      <form id="login-form" novalidate autocomplete="on">
+        <div class="form-group">
+          <label class="form-label" for="username">用户名</label>
+          <div class="form-input-wrapper">
+            <svg class="form-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="8" r="4"/>
+              <path d="M4 20c0-4 4-7 8-7s8 3 8 7"/>
+            </svg>
+            <input
+              type="text"
+              id="username"
+              class="form-input"
+              placeholder="请输入用户名"
+              autocomplete="username"
+              minlength="3"
+              maxlength="64"
+              required
+            >
+          </div>
+          <div id="username-error" class="form-error-text">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <circle cx="12" cy="16" r="0.5" fill="currentColor"/>
+            </svg>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">密码</label>
+          <div class="form-input-wrapper">
+            <svg class="form-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2"/>
+              <path d="M7 11V7a5 5 0 0110 0v4"/>
+            </svg>
+            <input
+              type="password"
+              id="password"
+              class="form-input"
+              placeholder="请输入密码"
+              autocomplete="current-password"
+              minlength="6"
+              required
+            >
+            <button type="button" class="password-toggle" id="toggle-password" aria-label="显示密码">
+              <svg id="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+          <div id="password-error" class="form-error-text">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <circle cx="12" cy="16" r="0.5" fill="currentColor"/>
+            </svg>
+            <span></span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="submit-btn">
+          <span class="btn-spinner"></span>
+          <span class="btn-text">登录</span>
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        还没有账号？<a href="/register.html">立即注册</a>
+      </div>
+    </div>
+  </main>
+
+  <p class="auth-tagline">
+    Powered by <span>C++</span> &amp; cpp-httplib
+  </p>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    var form     = document.getElementById('login-form');
+    var alertEl  = document.getElementById('alert');
+    var submitBtn = document.getElementById('submit-btn');
+    var usernameInput = document.getElementById('username');
+    var passwordInput = document.getElementById('password');
+    var toggleBtn = document.getElementById('toggle-password');
+    var eyeIcon   = document.getElementById('eye-icon');
+
+    var usernameError = document.getElementById('username-error');
+    var passwordError = document.getElementById('password-error');
+
+    if (auth.isLoggedIn()) {
+      window.location.href = '/index.html';
+    }
+
+    function showAlert(type, message) {
+      var icon = type === 'error'
+        ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>'
+        : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>';
+      alertEl.className = 'alert alert-' + type + ' visible';
+      alertEl.innerHTML = icon + '<span>' + message + '</span>';
+    }
+
+    function hideAlert() {
+      alertEl.className = 'alert';
+    }
+
+    function showFieldError(el, msg) {
+      el.querySelector('span').textContent = msg;
+      el.classList.add('visible');
+    }
+
+    function clearFieldError(el) {
+      el.classList.remove('visible');
+    }
+
+    function clearAllErrors() {
+      hideAlert();
+      clearFieldError(usernameError);
+      clearFieldError(passwordError);
+      usernameInput.classList.remove('error');
+      passwordInput.classList.remove('error');
+    }
+
+    function setLoading(state) {
+      submitBtn.classList.toggle('loading', state);
+      submitBtn.disabled = state;
+    }
+
+    toggleBtn.addEventListener('click', function() {
+      var isPassword = passwordInput.type === 'password';
+      passwordInput.type = isPassword ? 'text' : 'password';
+      this.setAttribute('aria-label', isPassword ? '隐藏密码' : '显示密码');
+
+      if (isPassword) {
+        eyeIcon.innerHTML = '<line x1="1" y1="1" x2="23" y2="23" stroke="currentColor" stroke-width="2"/><path d="M9.88 9.88a3 3 0 104.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0112 5c7 0 11 7 11 7a13.16 13.16 0 01-1.67 2.68"/><path d="M6.61 6.61A13.53 13.53 0 001 12s4 8 11 8a9.58 9.58 0 005.63-1.9"/>';
+      } else {
+        eyeIcon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+      }
+    });
+
+    usernameInput.addEventListener('blur', function() {
+      var val = this.value.trim();
+      if (!val) {
+        showFieldError(usernameError, '请输入用户名');
+        this.classList.add('error');
+      } else if (val.length < 3) {
+        showFieldError(usernameError, '用户名至少需要3个字符');
+        this.classList.add('error');
+      } else {
+        clearFieldError(usernameError);
+        this.classList.remove('error');
+      }
+    });
+
+    passwordInput.addEventListener('blur', function() {
+      var val = this.value;
+      if (!val) {
+        showFieldError(passwordError, '请输入密码');
+        this.classList.add('error');
+      } else if (val.length < 6) {
+        showFieldError(passwordError, '密码至少需要6个字符');
+        this.classList.add('error');
+      } else {
+        clearFieldError(passwordError);
+        this.classList.remove('error');
+      }
+    });
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      clearAllErrors();
+
+      var username = usernameInput.value.trim();
+      var password = passwordInput.value;
+      var valid = true;
+
+      if (!username) {
+        showFieldError(usernameError, '请输入用户名');
+        usernameInput.classList.add('error');
+        valid = false;
+      } else if (username.length < 3) {
+        showFieldError(usernameError, '用户名至少需要3个字符');
+        usernameInput.classList.add('error');
+        valid = false;
+      }
+
+      if (!password) {
+        showFieldError(passwordError, '请输入密码');
+        passwordInput.classList.add('error');
+        valid = false;
+      } else if (password.length < 6) {
+        showFieldError(passwordError, '密码至少需要6个字符');
+        passwordInput.classList.add('error');
+        valid = false;
+      }
+
+      if (!valid) return;
+
+      setLoading(true);
+
+      try {
+        var data = await api.login(username, password);
+        auth.saveUser(data);
+        window.location.href = '/index.html';
+      } catch (err) {
+        var msg = err.message || '登录失败，请重试';
+        showAlert('error', msg);
+      } finally {
+        setLoading(false);
+      }
+    });
+  </script>
+</body>
+</html>

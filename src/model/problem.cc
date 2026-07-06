@@ -34,11 +34,13 @@ int ProblemMapper::insert(const Problem &problem) {
     }
 
     std::ostringstream sql;
-    sql << "INSERT INTO problems (title, difficulty, content, `template`) VALUES ('"
+    sql << "INSERT INTO problems (title, difficulty, content, `template`, solution_content, solution_code) VALUES ('"
         << escape(conn, problem.title) << "', '"
         << escape(conn, problem.difficulty) << "', '"
         << escape(conn, problem.content) << "', '"
-        << escape(conn, problem.code_template) << "')";
+        << escape(conn, problem.code_template) << "', '"
+        << escape(conn, problem.solution_content) << "', '"
+        << escape(conn, problem.solution_code) << "')";
 
     if (mysql_query(conn, sql.str().c_str()) != 0) {
         LOG_ERROR("[PROBLEM] Insert failed: " + std::string(mysql_error(conn)));
@@ -60,6 +62,54 @@ int ProblemMapper::insert(const Problem &problem) {
     return id;
 }
 
+bool ProblemMapper::update(const Problem &problem) {
+    ScopedConnection db;
+    MYSQL *conn = db.get();
+    if (!conn) {
+        LOG_ERROR("[PROBLEM] No database connection for update");
+        return false;
+    }
+
+    std::ostringstream sql;
+    sql << "UPDATE problems SET "
+        << "title = '" << escape(conn, problem.title) << "', "
+        << "difficulty = '" << escape(conn, problem.difficulty) << "', "
+        << "content = '" << escape(conn, problem.content) << "', "
+        << "`template` = '" << escape(conn, problem.code_template) << "', "
+        << "solution_content = '" << escape(conn, problem.solution_content) << "', "
+        << "solution_code = '" << escape(conn, problem.solution_code) << "' "
+        << "WHERE id = " << problem.id;
+
+    if (mysql_query(conn, sql.str().c_str()) != 0) {
+        LOG_ERROR("[PROBLEM] Update failed: " + std::string(mysql_error(conn)));
+        return false;
+    }
+
+    if (static_cast<int>(mysql_affected_rows(conn)) == 0) {
+        LOG_WARN("[PROBLEM] No problem found with id=" + std::to_string(problem.id));
+        return false;
+    }
+
+    if (!problem.test_cases.empty()) {
+        std::ostringstream delSql;
+        delSql << "DELETE FROM test_cases WHERE problem_id = " << problem.id;
+        mysql_query(conn, delSql.str().c_str());
+
+        for (const auto &tc : problem.test_cases) {
+            TestCase c = tc;
+            c.problem_id = problem.id;
+            if (TestCaseMapper::insert(c) < 0) {
+                LOG_WARN("[PROBLEM] Failed to insert test case during update");
+            }
+        }
+        LOG_INFO("[PROBLEM] Updated " + std::to_string(problem.test_cases.size())
+                 + " test cases for problem id=" + std::to_string(problem.id));
+    }
+
+    LOG_INFO("[PROBLEM] Updated problem id=" + std::to_string(problem.id));
+    return true;
+}
+
 Problem ProblemMapper::findById(int id) {
     Problem problem;
 
@@ -71,7 +121,7 @@ Problem ProblemMapper::findById(int id) {
     }
 
     std::ostringstream sql;
-    sql << "SELECT id, title, difficulty, content, `template`, created_at "
+    sql << "SELECT id, title, difficulty, content, `template`, solution_content, solution_code, created_at "
         << "FROM problems WHERE id = " << id;
 
     if (mysql_query(conn, sql.str().c_str()) != 0) {
@@ -89,7 +139,9 @@ Problem ProblemMapper::findById(int id) {
         problem.difficulty = row[2] ? row[2] : "";
         problem.content = row[3] ? row[3] : "";
         problem.code_template = row[4] ? row[4] : "";
-        problem.created_at = row[5] ? row[5] : "";
+        problem.solution_content = row[5] ? row[5] : "";
+        problem.solution_code = row[6] ? row[6] : "";
+        problem.created_at = row[7] ? row[7] : "";
     }
     mysql_free_result(result);
 

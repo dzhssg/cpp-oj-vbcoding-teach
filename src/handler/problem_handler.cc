@@ -46,6 +46,8 @@ void handleGetProblemById(const httplib::Request &req, httplib::Response &res) {
     obj["difficulty"] = problem.difficulty;
     obj["content"] = problem.content;
     obj["template"] = problem.code_template;
+    obj["solution_content"] = problem.solution_content;
+    obj["solution_code"] = problem.solution_code;
     obj["created_at"] = problem.created_at;
 
     json cases = json::array();

@@ -174,11 +174,11 @@ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 - [X] ⽤⼾登录 API
 - [] ⽤⼾退出登录
 ### Phase 5 - 前端
-- [ ] 登录⻚⾯ (`/login.html`)
-- [ ] 注册⻚⾯ (`/register.html`)
-- [ ] 题⽬列表⻚⾯
-- [ ] 题⽬详情⻚⾯（描述 + 在线编辑器）
-- [ ] 提交结果展⽰
+- [X] 登录⻚⾯ (`/login.html`)
+- [X] 注册⻚⾯ (`/register.html`)
+- [X] 题⽬列表⻚⾯
+- [X] 题⽬详情⻚⾯（描述 + 在线编辑器）
+- [X] 提交结果展⽰
 - [ ] 管理后台（新增/删除题⽬）
 ### Phase 6 - 安全与部署
 - [ ] 管理员权限校验

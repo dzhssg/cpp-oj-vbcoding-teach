@@ -11,6 +11,7 @@ public:
     ProblemService() = delete;
 
     static int createProblem(const Problem &problem);
+    static bool updateProblem(const Problem &problem);
     static Problem getProblemById(int id);
     static std::vector<Problem> getAllProblems();
     static bool deleteProblemById(int id);

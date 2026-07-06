@@ -4,6 +4,7 @@
 #include "utils/httplib.h"
 
 void handleAdminCreateProblem(const httplib::Request &req, httplib::Response &res);
+void handleAdminUpdateProblem(const httplib::Request &req, httplib::Response &res);
 void handleAdminDeleteProblem(const httplib::Request &req, httplib::Response &res);
 
 #endif

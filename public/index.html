@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>题目列表 - OJ System</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+
+  <div class="particles" aria-hidden="true">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="/index.html" class="navbar-brand">
+        <svg viewBox="0 0 40 40" fill="none">
+          <rect x="2" y="2" width="36" height="36" rx="8" stroke="currentColor" stroke-width="2.5" fill="none"/>
+          <path d="M12 26L12 14L18 20L24 14L28 20L28 26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <line x1="10" y1="30" x2="30" y2="30" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <span class="navbar-brand-text">OJ System</span>
+      </a>
+
+      <div class="navbar-user">
+        <span class="navbar-username">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 20c0-4 4-7 8-7s8 3 8 7"/>
+          </svg>
+          <span id="nav-username"></span>
+        </span>
+        <span id="nav-role" class="navbar-role-badge" style="display:none;">ADMIN</span>
+        <a href="/admin.html" class="nav-admin-link" id="nav-admin-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
+          </svg>
+          管理
+        </a>
+        <button class="btn-logout" id="btn-logout">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          <span>登出</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page">
+    <div class="page-inner">
+      <div class="page-header">
+        <h1 class="page-title">Problems</h1>
+        <p class="page-subtitle">&gt; problem_list --format table</p>
+      </div>
+
+      <div id="state-loading" class="state-message visible">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="spinner-icon">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M10 6c-2.1.8-3.8 2.2-4.7 4.1"/>
+          <style>
+            .spinner-icon { animation: spin 1.5s linear infinite; }
+            @keyframes spin { to { transform: rotate(360deg); } }
+          </style>
+        </svg>
+        <p class="state-title">加载题目中...</p>
+        <p>正在从服务器获取题目列表</p>
+      </div>
+
+      <div id="state-error" class="state-message">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="15" y1="9" x2="9" y2="15"/>
+          <line x1="9" y1="9" x2="15" y2="15"/>
+        </svg>
+        <p class="state-title">加载失败</p>
+        <p id="error-message">无法获取题目数据</p>
+        <button class="btn btn-primary" id="btn-retry" style="width:auto; margin-top:16px; padding:10px 32px;">重试</button>
+      </div>
+
+      <div id="state-empty" class="state-message">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="2" width="20" height="20" rx="3"/>
+          <line x1="8" y1="8" x2="16" y2="8"/>
+          <line x1="8" y1="12" x2="16" y2="12"/>
+          <line x1="8" y1="16" x2="12" y2="16"/>
+        </svg>
+        <p class="state-title">暂无题目</p>
+        <p>题目列表为空，请联系管理员添加题目</p>
+      </div>
+
+      <div class="problem-table-wrapper" id="table-wrapper" style="display:none;">
+        <table class="problem-table">
+          <thead>
+            <tr>
+              <th class="col-id">#</th>
+              <th>标题</th>
+              <th>难度</th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <p class="auth-tagline">
+    Powered by <span>C++</span> &amp; cpp-httplib
+  </p>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/problem.js"></script>
+</body>
+</html>

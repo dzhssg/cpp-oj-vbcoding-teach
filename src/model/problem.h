@@ -12,6 +12,8 @@ struct Problem {
     std::string difficulty;
     std::string content;
     std::string code_template;
+    std::string solution_content;
+    std::string solution_code;
     std::string created_at;
 
     std::vector<TestCase> test_cases;
@@ -22,6 +24,7 @@ public:
     ProblemMapper() = delete;
 
     static int insert(const Problem &problem);
+    static bool update(const Problem &problem);
     static Problem findById(int id);
     static std::vector<Problem> findAll();
     static bool deleteById(int id);

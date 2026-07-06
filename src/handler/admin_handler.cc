@@ -53,6 +53,8 @@ void handleAdminCreateProblem(const httplib::Request &req, httplib::Response &re
     problem.difficulty = body.value("difficulty", "Easy");
     problem.content = body["content"].get<std::string>();
     problem.code_template = body.value("template", "");
+    problem.solution_content = body.value("solution_content", "");
+    problem.solution_code = body.value("solution_code", "");
 
     if (body.contains("test_cases") && body["test_cases"].is_array()) {
         for (const auto &tc_json : body["test_cases"]) {
@@ -77,6 +79,75 @@ void handleAdminCreateProblem(const httplib::Request &req, httplib::Response &re
     resp["id"] = id;
     resp["message"] = "Problem created successfully";
     res.status = 201;
+    res.set_content(resp.dump(), "application/json");
+}
+
+void handleAdminUpdateProblem(const httplib::Request &req, httplib::Response &res) {
+    LOG_DEBUG("[ADMIN] PUT /api/admin/problems/:id");
+
+    SessionUser user;
+    if (!requireAdmin(req, res, user)) {
+        return;
+    }
+
+    int id = std::stoi(req.matches[1].str());
+
+    json body;
+    try {
+        body = json::parse(req.body);
+    } catch (const json::parse_error &e) {
+        json err;
+        err["error"] = "Invalid JSON";
+        res.status = 400;
+        res.set_content(err.dump(), "application/json");
+        return;
+    }
+
+    if (!body.contains("title") || !body["title"].is_string()) {
+        json err;
+        err["error"] = "Missing or invalid 'title' field";
+        res.status = 400;
+        res.set_content(err.dump(), "application/json");
+        return;
+    }
+
+    if (!body.contains("content") || !body["content"].is_string()) {
+        json err;
+        err["error"] = "Missing or invalid 'content' field";
+        res.status = 400;
+        res.set_content(err.dump(), "application/json");
+        return;
+    }
+
+    Problem problem;
+    problem.id = id;
+    problem.title = body["title"].get<std::string>();
+    problem.difficulty = body.value("difficulty", "Easy");
+    problem.content = body["content"].get<std::string>();
+    problem.code_template = body.value("template", "");
+    problem.solution_content = body.value("solution_content", "");
+    problem.solution_code = body.value("solution_code", "");
+
+    if (body.contains("test_cases") && body["test_cases"].is_array()) {
+        for (const auto &tc_json : body["test_cases"]) {
+            TestCase tc;
+            tc.input = tc_json.value("input", "");
+            tc.expected = tc_json.value("expected", "");
+            tc.position = tc_json.value("position", static_cast<int>(problem.test_cases.size()));
+            problem.test_cases.push_back(tc);
+        }
+    }
+
+    if (!ProblemService::updateProblem(problem)) {
+        json err;
+        err["error"] = "Problem not found";
+        res.status = 404;
+        res.set_content(err.dump(), "application/json");
+        return;
+    }
+
+    json resp;
+    resp["message"] = "Problem updated successfully";
     res.set_content(resp.dump(), "application/json");
 }
 

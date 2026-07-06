@@ -20,5 +20,6 @@ void registerRoutes(httplib::Server &server) {
 
     // Admin problem APIs
     server.Post("/api/admin/problems", handleAdminCreateProblem);
+    server.Put(R"(/api/admin/problems/(\d+))", handleAdminUpdateProblem);
     server.Delete(R"(/api/admin/problems/(\d+))", handleAdminDeleteProblem);
 }
