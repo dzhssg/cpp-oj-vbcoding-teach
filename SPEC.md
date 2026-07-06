@@ -172,6 +172,7 @@ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 - [X] Session/Cookie 认证机制
 - [X] ⽤⼾注册 API（⽤⼾名唯⼀性校验）
 - [X] ⽤⼾登录 API
+- [] ⽤⼾退出登录
 ### Phase 5 - 前端
 - [ ] 登录⻚⾯ (`/login.html`)
 - [ ] 注册⻚⾯ (`/register.html`)

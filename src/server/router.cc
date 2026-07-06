@@ -16,6 +16,7 @@ void registerRoutes(httplib::Server &server) {
     // Auth APIs
     server.Post("/api/register", handleRegister);
     server.Post("/api/login", handleLogin);
+    server.Post("/api/logout", handleLogout);
 
     // Admin problem APIs
     server.Post("/api/admin/problems", handleAdminCreateProblem);

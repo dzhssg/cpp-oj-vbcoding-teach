@@ -15,6 +15,7 @@ void clearSessionCookie(httplib::Response &res);
 
 void handleRegister(const httplib::Request &req, httplib::Response &res);
 void handleLogin(const httplib::Request &req, httplib::Response &res);
+void handleLogout(const httplib::Request &req, httplib::Response &res);
 
 bool authenticate(const httplib::Request &req, httplib::Response &res, SessionUser &user);
 bool requireAdmin(const httplib::Request &req, httplib::Response &res, SessionUser &user);

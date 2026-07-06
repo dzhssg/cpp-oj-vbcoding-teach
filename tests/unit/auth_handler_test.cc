@@ -658,4 +658,98 @@ TEST_F(LoginHandlerTest, LoginFailsForNonexistentUserEvenWithEmptyPassword) {
     ASSERT_EQ(res.status, 400);
 }
 
+// ── handleLogout ───────────────────────────────────────────────────────────
+
+TEST_F(LoginHandlerTest, LogoutClearsSessionCookie) {
+    createUserWithPassword("logout_user", "pass123");
+
+    httplib::Response loginRes;
+    handleLogin(makeLoginReq("logout_user", "pass123"), loginRes);
+    trackSessionFromResponse(loginRes);
+    ASSERT_EQ(loginRes.status, 200);
+
+    std::string sid = extractSessionIdFromSetCookie(
+        loginRes.get_header_value("Set-Cookie"));
+    ASSERT_FALSE(sid.empty());
+
+    httplib::Request logoutReq;
+    logoutReq.set_header("Cookie", "session_id=" + sid);
+    httplib::Response logoutRes;
+    handleLogout(logoutReq, logoutRes);
+
+    ASSERT_EQ(logoutRes.status, 200);
+
+    json body = parseResponseBody(logoutRes);
+    ASSERT_EQ(body["message"].get<std::string>(), "Logged out successfully");
+
+    std::string cookie = logoutRes.get_header_value("Set-Cookie");
+    ASSERT_NE(cookie.find("session_id=;"), std::string::npos);
+    ASSERT_NE(cookie.find("Max-Age=0"), std::string::npos);
+}
+
+TEST_F(LoginHandlerTest, LogoutInvalidatesSession) {
+    createUserWithPassword("invalidate_user", "pass456");
+
+    httplib::Response loginRes;
+    handleLogin(makeLoginReq("invalidate_user", "pass456"), loginRes);
+    ASSERT_EQ(loginRes.status, 200);
+
+    std::string sid = extractSessionIdFromSetCookie(
+        loginRes.get_header_value("Set-Cookie"));
+    ASSERT_FALSE(sid.empty());
+
+    SessionUser validUser = SessionManager::validate(sid);
+    ASSERT_GT(validUser.user_id, 0);
+
+    httplib::Request logoutReq;
+    logoutReq.set_header("Cookie", "session_id=" + sid);
+    httplib::Response logoutRes;
+    handleLogout(logoutReq, logoutRes);
+    ASSERT_EQ(logoutRes.status, 200);
+
+    SessionUser invalidUser = SessionManager::validate(sid);
+    ASSERT_EQ(invalidUser.user_id, 0);
+}
+
+TEST_F(LoginHandlerTest, LogoutSucceedsWithoutSessionCookie) {
+    httplib::Request req;
+    httplib::Response res;
+    handleLogout(req, res);
+
+    ASSERT_EQ(res.status, 200);
+
+    json body = parseResponseBody(res);
+    ASSERT_EQ(body["message"].get<std::string>(), "Logged out successfully");
+
+    std::string cookie = res.get_header_value("Set-Cookie");
+    ASSERT_NE(cookie.find("session_id=;"), std::string::npos);
+    ASSERT_NE(cookie.find("Max-Age=0"), std::string::npos);
+}
+
+TEST_F(LoginHandlerTest, LogoutSucceedsWithInvalidSessionId) {
+    httplib::Request req;
+    req.set_header("Cookie", "session_id=nonexistent_session_xyz");
+    httplib::Response res;
+
+    handleLogout(req, res);
+
+    ASSERT_EQ(res.status, 200);
+
+    json body = parseResponseBody(res);
+    ASSERT_EQ(body["message"].get<std::string>(), "Logged out successfully");
+}
+
+TEST_F(LoginHandlerTest, LogoutSucceedsWithEmptySessionCookie) {
+    httplib::Request req;
+    req.set_header("Cookie", "session_id=");
+    httplib::Response res;
+
+    handleLogout(req, res);
+
+    ASSERT_EQ(res.status, 200);
+
+    json body = parseResponseBody(res);
+    ASSERT_EQ(body["message"].get<std::string>(), "Logged out successfully");
+}
+
 }  // namespace

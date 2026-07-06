@@ -245,6 +245,22 @@ void handleLogin(const httplib::Request &req, httplib::Response &res) {
     res.set_content(resp.dump(), "application/json");
 }
 
+void handleLogout(const httplib::Request &req, httplib::Response &res) {
+    LOG_DEBUG("[AUTH] POST /api/logout");
+
+    std::string sessionId = extractSessionId(req);
+    if (!sessionId.empty()) {
+        SessionManager::destroy(sessionId);
+    }
+
+    clearSessionCookie(res);
+
+    json resp;
+    resp["message"] = "Logged out successfully";
+    res.status = 200;
+    res.set_content(resp.dump(), "application/json");
+}
+
 bool authenticate(const httplib::Request &req, httplib::Response &res, SessionUser &user) {
     std::string sessionId = extractSessionId(req);
     if (sessionId.empty()) {
