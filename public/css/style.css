@@ -2345,10 +2345,10 @@ a:focus-visible {
   max-width: 1000px;
   margin: 0 auto;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
+  justify-content: center;
+  gap: 8px;
 }
 
 .landing-footer-brand {
