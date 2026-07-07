@@ -49,10 +49,12 @@ rm -f /tmp/oj_cookie.txt
 
 **测试点**：验证正常注册流程，检查返回 201 及用户 ID
 
+> 使用 `$(date +%s)` 生成唯一用户名，确保多次运行均能通过。
+
 ```bash
 curl -s -w "\nHTTP_STATUS:%{http_code}" \
   -H "Content-Type: application/json" \
-  -d '{"username":"testuser_001","password":"pass1234","confirm_password":"pass1234"}' \
+  -d '{"username":"testuser_'$(date +%s)'","password":"pass1234","confirm_password":"pass1234"}' \
   http://8.138.161.148:8080/api/register
 ```
 
@@ -833,6 +835,8 @@ curl -c /tmp/oj_cookie.txt \
   http://8.138.161.148:8080/api/login
 ```
 
+> **可重复运行说明**：以下 ADMIN-01 ~ ADMIN-06 用例使用 `$(date +%s)` 生成唯一标题，确保多次运行互不干扰。ADMIN-06 末尾会删除测试题目。
+
 ---
 
 ### ADMIN-01 创建新题目（完整字段 + 多个测试用例）
@@ -840,16 +844,19 @@ curl -c /tmp/oj_cookie.txt \
 **测试点**：验证管理员创建包含完整字段和多测试用例的题目
 
 ```bash
+# 登录管理员
 curl -c /tmp/oj_cookie.txt \
   -H "Content-Type: application/json" \
   -d '{"username":"admin","password":"admin123"}' \
   http://8.138.161.148:8080/api/login > /dev/null 2>&1
 
-curl -s -w "\nHTTP_STATUS:%{http_code}" \
-  -b /tmp/oj_cookie.txt \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "两数之和",
+# 使用时间戳生成唯一标题
+TITLE="两数之和_$(date +%s)"
+
+# 构造 JSON 请求体
+BODY=$(cat <<'ENDOFJSON'
+{
+    "title": "REPLACE_TITLE",
     "difficulty": "Easy",
     "content": "# 两数之和\n\n计算两个整数的和。\n\n## 输入\n一行两个整数 a, b",
     "template": "#include <iostream>\n\nint main() {\n    int a, b;\n    std::cin >> a >> b;\n    // 在此编写代码\n    return 0;\n}",
@@ -860,7 +867,15 @@ curl -s -w "\nHTTP_STATUS:%{http_code}" \
       {"input": "10 20", "expected": "30", "position": 1},
       {"input": "-5 5", "expected": "0", "position": 2}
     ]
-  }' \
+  }
+ENDOFJSON
+)
+BODY="${BODY/REPLACE_TITLE/$TITLE}"
+
+curl -s -w "\nHTTP_STATUS:%{http_code}" \
+  -b /tmp/oj_cookie.txt \
+  -H "Content-Type: application/json" \
+  -d "$BODY" \
   http://8.138.161.148:8080/api/admin/problems
 ```
 
@@ -879,9 +894,9 @@ curl -s -b /tmp/oj_cookie.txt \
   http://8.138.161.148:8080/api/problems | python3 -c "
 import json, sys
 data = json.load(sys.stdin)
-target = [p for p in data if p['title'] == '两数之和']
+target = [p for p in data if p['title'] == '$TITLE']
 if target:
-    print(f'PASS: 在列表中找到题目「两数之和」，ID={target[0][\"id\"]}')
+    print(f'PASS: 在列表中找到题目「$TITLE」，ID={target[0][\"id\"]}')
 else:
     print('FAIL: 未找到创建的题目')
 "
@@ -898,12 +913,12 @@ else:
 ```bash
 # 获取刚创建的题目 ID
 NEW_ID=$(curl -s -b /tmp/oj_cookie.txt \
-  http://8.138.161.148:8080/api/problems | python3 -c "import json,sys; data=[p for p in json.load(sys.stdin) if p['title']=='两数之和']; print(data[0]['id'] if data else '')")
+  http://8.138.161.148:8080/api/problems | python3 -c "import json,sys; data=[p for p in json.load(sys.stdin) if p['title']=='$TITLE']; print(data[0]['id'] if data else '')")
 
 curl -s http://8.138.161.148:8080/api/problems/$NEW_ID | python3 -c "
 import json, sys
 data = json.load(sys.stdin)
-assert data['title'] == '两数之和', f'FAIL: 标题不匹配: {data[\"title\"]}'
+assert data['title'] == '$TITLE', f'FAIL: 标题不匹配: {data[\"title\"]}'
 assert data['difficulty'] == 'Easy', f'FAIL: 难度不匹配'
 assert data['content'].startswith('#'), f'FAIL: content 不是 Markdown'
 assert 'template' in data, 'FAIL: 缺少 template'
@@ -926,29 +941,32 @@ print(f'PASS: 题目 ID={data[\"id\"]}，测试用例 {len(cases)} 个')
 **测试点**：验证管理员可以更新题目
 
 ```bash
+# 获取 ADMIN-01 创建的题目 ID
 NEW_ID=$(curl -s -b /tmp/oj_cookie.txt \
-  http://8.138.161.148:8080/api/problems | python3 -c "import json,sys; data=[p for p in json.load(sys.stdin) if p['title']=='两数之和']; print(data[0]['id'] if data else '')")
+  http://8.138.161.148:8080/api/problems | python3 -c "import json,sys; data=[p for p in json.load(sys.stdin) if p['title']=='$TITLE']; print(data[0]['id'] if data else '')")
+
+NEW_TITLE="${TITLE}（修订版）"
 
 curl -s -w "\nHTTP_STATUS:%{http_code}" \
   -b /tmp/oj_cookie.txt \
   -H "Content-Type: application/json" \
-  -d '{
-    "title": "两数之和（修订版）",
-    "difficulty": "Medium",
-    "content": "# 两数之和 v2\n计算两个整数的和（更新版）。",
-    "template": "#include <iostream>\nint main(){int a,b;std::cin>>a>>b;return 0;}",
-    "test_cases": [
-      {"input": "1 2", "expected": "3", "position": 0},
-      {"input": "100 200", "expected": "300", "position": 1}
+  -d "{
+    \"title\": \"$NEW_TITLE\",
+    \"difficulty\": \"Medium\",
+    \"content\": \"# 两数之和 v2\n计算两个整数的和（更新版）。\",
+    \"template\": \"#include <iostream>\nint main(){int a,b;std::cin>>a>>b;return 0;}\",
+    \"test_cases\": [
+      {\"input\": \"1 2\", \"expected\": \"3\", \"position\": 0},
+      {\"input\": \"100 200\", \"expected\": \"300\", \"position\": 1}
     ]
-  }' \
+  }" \
   http://8.138.161.148:8080/api/admin/problems/$NEW_ID
 ```
 
 **预期结果**：
 - HTTP 状态码：`200`
 - 响应体包含 `"message":"Problem updated successfully"`
-- 再次获取详情，标题应为 `"两数之和（修订版）"`，难度应为 `"Medium"`
+- 再次获取详情，标题应为 `"${TITLE}（修订版）"`，难度应为 `"Medium"`
 
 ---
 
@@ -975,9 +993,9 @@ curl -s -w "\nHTTP_STATUS:%{http_code}" \
 **测试点**：验证管理员可以删除题目
 
 ```bash
-# 先获取需要删除的题目 ID（用修订版题目）
+# 获取 ADMIN-04 更新后的题目 ID（标题含"修订版"）
 DEL_ID=$(curl -s -b /tmp/oj_cookie.txt \
-  http://8.138.161.148:8080/api/problems | python3 -c "import json,sys; data=[p for p in json.load(sys.stdin) if '两数之和' in p['title']]; print(data[0]['id'] if data else '')")
+  http://8.138.161.148:8080/api/problems | python3 -c "import json,sys; data=[p for p in json.load(sys.stdin) if '修订版' in p['title']]; print(data[0]['id'] if data else '')")
 
 curl -s -w "\nHTTP_STATUS:%{http_code}" \
   -b /tmp/oj_cookie.txt \
@@ -989,6 +1007,11 @@ curl -s -w "\nHTTP_STATUS:%{http_code}" \
 - HTTP 状态码：`200`
 - 响应体包含 `"message":"Problem deleted successfully"`
 - 再次获取列表，该题目应不再出现
+
+> **注意**：删除后清理 Cookie：
+> ```bash
+> rm -f /tmp/oj_cookie.txt
+> ```
 
 ---
 
@@ -1050,20 +1073,24 @@ curl -s -w "\nHTTP_STATUS:%{http_code}" \
 **测试点**：验证不传 difficulty 时默认为 Easy
 
 ```bash
+# 使用时间戳生成唯一标题
+DIFF_TITLE="默认难度测试_$(date +%s)"
+
+# 创建题目（不传 difficulty）
 curl -s -b /tmp/oj_cookie.txt \
   -H "Content-Type: application/json" \
-  -d '{
-    "title": "默认难度测试",
-    "content": "# 测试\n一个测试题目。",
-    "test_cases": [{"input": "1", "expected": "1", "position": 0}]
-  }' \
+  -d "{
+    \"title\": \"$DIFF_TITLE\",
+    \"content\": \"# 测试\n一个测试题目。\",
+    \"test_cases\": [{\"input\": \"1\", \"expected\": \"1\", \"position\": 0}]
+  }" \
   http://8.138.161.148:8080/api/admin/problems > /dev/null
 
 # 获取该题目的 difficulty
 curl -s http://8.138.161.148:8080/api/problems | python3 -c "
 import json, sys
 data = json.load(sys.stdin)
-target = [p for p in data if p['title'] == '默认难度测试']
+target = [p for p in data if p['title'] == '$DIFF_TITLE']
 if target:
     diff = target[0]['difficulty']
     print(f'difficulty = {diff}')
@@ -1074,11 +1101,16 @@ if target:
 else:
     print('WARN: 未找到测试题目')
 "
+
+# 清理：删除测试题目（可选）
+DIFF_NEW_ID=$(curl -s http://8.138.161.148:8080/api/problems | python3 -c "import json,sys; data=[p for p in json.load(sys.stdin) if p['title']=='$DIFF_TITLE']; print(data[0]['id'] if data else '')")
+if [ -n "$DIFF_NEW_ID" ]; then
+  curl -s -b /tmp/oj_cookie.txt -X DELETE \
+    http://8.138.161.148:8080/api/admin/problems/$DIFF_NEW_ID > /dev/null
+fi
 ```
 
 **预期结果**：`difficulty` 为 `"Easy"`
-
-> 测试结束后，需调用 DELETE 清理该题目
 
 ---
 
