@@ -5,3 +5,29 @@
 [2026-07-06 23:24:33.779] [INFO] [SERVER] Listening on 0.0.0.0:8080
 [2026-07-06 23:28:07.234] [INFO] [PROBLEM] Updated 2 test cases for problem id=1
 [2026-07-06 23:28:07.234] [INFO] [PROBLEM] Updated problem id=1
+[2026-07-07 08:54:39.445] [INFO] [SESSION] Cleaned up 1 expired sessions
+[2026-07-07 08:54:39.445] [INFO] [AUTH] Cleaned up 1 expired sessions
+[2026-07-07 14:19:42.516] [INFO] [SESSION] Created session for user_id=125
+[2026-07-07 14:24:43.315] [INFO] [SESSION] Cleaned up 4 expired sessions
+[2026-07-07 14:24:43.316] [INFO] [AUTH] Cleaned up 4 expired sessions
+[2026-07-07 14:33:19.479] [INFO] [SESSION] Created session for user_id=125
+[2026-07-07 14:33:20.584] [INFO] [PROBLEM] Inserted problem id=95 with 4 test cases
+[2026-07-07 14:33:21.647] [INFO] [PROBLEM] Inserted problem id=96 with 5 test cases
+[2026-07-07 14:33:22.645] [INFO] [PROBLEM] Inserted problem id=97 with 4 test cases
+[2026-07-07 14:33:23.772] [INFO] [PROBLEM] Inserted problem id=98 with 5 test cases
+[2026-07-07 14:33:24.855] [INFO] [PROBLEM] Inserted problem id=99 with 5 test cases
+[2026-07-07 14:33:25.843] [INFO] [PROBLEM] Inserted problem id=100 with 4 test cases
+[2026-07-07 14:33:26.751] [INFO] [PROBLEM] Inserted problem id=101 with 4 test cases
+[2026-07-07 14:33:27.305] [INFO] [PROBLEM] Inserted problem id=102 with 1 test cases
+[2026-07-07 14:33:47.447] [INFO] [SESSION] Created session for user_id=125
+[2026-07-07 14:33:47.508] [INFO] [PROBLEM] Updated 3 test cases for problem id=1
+[2026-07-07 14:33:47.508] [INFO] [PROBLEM] Updated problem id=1
+[2026-07-07 14:37:31.095] [INFO] [SESSION] Created session for user_id=125
+[2026-07-07 14:37:32.229] [INFO] [PROBLEM] Inserted problem id=103 with 5 test cases
+[2026-07-07 14:37:33.013] [INFO] [PROBLEM] Inserted problem id=104 with 3 test cases
+[2026-07-07 14:37:34.233] [INFO] [PROBLEM] Inserted problem id=105 with 5 test cases
+[2026-07-07 14:37:35.441] [INFO] [PROBLEM] Inserted problem id=106 with 5 test cases
+[2026-07-07 14:37:36.667] [INFO] [PROBLEM] Inserted problem id=107 with 6 test cases
+[2026-07-07 14:37:37.415] [INFO] [PROBLEM] Inserted problem id=108 with 3 test cases
+[2026-07-07 14:37:38.382] [INFO] [PROBLEM] Inserted problem id=109 with 4 test cases
+[2026-07-07 14:37:39.629] [INFO] [PROBLEM] Inserted problem id=110 with 5 test cases

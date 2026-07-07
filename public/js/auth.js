@@ -27,7 +27,7 @@ const auth = {
 
   redirectIfLoggedIn(target) {
     if (this.isLoggedIn()) {
-      window.location.href = target || '/index.html';
+      window.location.href = target || '/problem_list.html';
     }
   },
 

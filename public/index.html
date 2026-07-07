@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>题目列表 - OJ System</title>
+  <title>OJ System - C++ 在线判题系统</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -26,7 +26,7 @@
 
   <nav class="navbar">
     <div class="navbar-inner">
-      <a href="/index.html" class="navbar-brand">
+      <a href="/" class="navbar-brand">
         <svg viewBox="0 0 40 40" fill="none">
           <rect x="2" y="2" width="36" height="36" rx="8" stroke="currentColor" stroke-width="2.5" fill="none"/>
           <path d="M12 26L12 14L18 20L24 14L28 20L28 26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
@@ -36,97 +36,414 @@
       </a>
 
       <div class="navbar-user">
-        <span class="navbar-username">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <a href="/login.html" class="nav-landing-link" id="nav-login-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+            <rect x="3" y="11" width="18" height="11" rx="2"/>
+            <path d="M7 11V7a5 5 0 0110 0v4"/>
+          </svg>
+          登录
+        </a>
+        <a href="/register.html" class="nav-landing-link nav-landing-primary" id="nav-register-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
             <circle cx="12" cy="8" r="4"/>
             <path d="M4 20c0-4 4-7 8-7s8 3 8 7"/>
           </svg>
-          <span id="nav-username"></span>
-        </span>
-        <span id="nav-role" class="navbar-role-badge" style="display:none;">ADMIN</span>
-        <a href="/admin.html" class="nav-admin-link" id="nav-admin-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="3"/>
-            <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
-          </svg>
-          管理
+          注册
         </a>
-        <button class="btn-logout" id="btn-logout">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
-            <polyline points="16 17 21 12 16 7"/>
-            <line x1="21" y1="12" x2="9" y2="12"/>
-          </svg>
-          <span>登出</span>
-        </button>
+        <a href="/problem_list.html" class="nav-landing-link" id="nav-problems-link" style="display:none;">
+          进入系统
+        </a>
       </div>
     </div>
   </nav>
 
-  <main class="page">
-    <div class="page-inner">
-      <div class="page-header">
-        <h1 class="page-title">Problems</h1>
-        <p class="page-subtitle">&gt; problem_list --format table</p>
-      </div>
+  <main class="landing-page">
 
-      <div id="state-loading" class="state-message visible">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="spinner-icon">
-          <circle cx="12" cy="12" r="9"/>
-          <path d="M10 6c-2.1.8-3.8 2.2-4.7 4.1"/>
-          <style>
-            .spinner-icon { animation: spin 1.5s linear infinite; }
-            @keyframes spin { to { transform: rotate(360deg); } }
-          </style>
-        </svg>
-        <p class="state-title">加载题目中...</p>
-        <p>正在从服务器获取题目列表</p>
-      </div>
+    <section class="hero">
+      <div class="hero-glow"></div>
+      <div class="hero-content">
+        <div class="hero-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+            <polyline points="16 18 22 12 16 6"/>
+            <polyline points="8 6 2 12 8 18"/>
+          </svg>
+          支持 C++17 标准
+        </div>
 
-      <div id="state-error" class="state-message">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"/>
-          <line x1="15" y1="9" x2="9" y2="15"/>
-          <line x1="9" y1="9" x2="15" y2="15"/>
-        </svg>
-        <p class="state-title">加载失败</p>
-        <p id="error-message">无法获取题目数据</p>
-        <button class="btn btn-primary" id="btn-retry" style="width:auto; margin-top:16px; padding:10px 32px;">重试</button>
-      </div>
+        <h1 class="hero-title">
+          <span class="hero-title-line">在线编程</span>
+          <span class="hero-title-accent">判题系统</span>
+        </h1>
 
-      <div id="state-empty" class="state-message">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="2" y="2" width="20" height="20" rx="3"/>
-          <line x1="8" y1="8" x2="16" y2="8"/>
-          <line x1="8" y1="12" x2="16" y2="12"/>
-          <line x1="8" y1="16" x2="12" y2="16"/>
-        </svg>
-        <p class="state-title">暂无题目</p>
-        <p>题目列表为空，请联系管理员添加题目</p>
-      </div>
+        <p class="hero-subtitle">
+          面向教学场景的轻量级 OJ 平台 &mdash; 在线编辑、实时编译、即时判题反馈。
+          <br>支持代码模板、测试用例管理、多难度分级。
+        </p>
 
-      <div class="problem-table-wrapper" id="table-wrapper" style="display:none;">
-        <table class="problem-table">
-          <thead>
-            <tr>
-              <th class="col-id">#</th>
-              <th>标题</th>
-              <th>难度</th>
-            </tr>
-          </thead>
-          <tbody id="table-body">
-          </tbody>
-        </table>
+        <div class="hero-actions">
+          <a href="/problem_list.html" class="hero-btn-primary" id="hero-cta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+            开始刷题
+          </a>
+          <a href="/login.html" class="hero-btn-secondary" id="hero-login-btn">
+            已有账号？登录
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="hero-stat-number" id="problem-count">--</span>
+            <span class="hero-stat-label">道题目</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-number">C++</span>
+            <span class="hero-stat-label">编程语言</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-number">&lt;5s</span>
+            <span class="hero-stat-label">判题响应</span>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
+
+    <section class="features">
+      <div class="features-inner">
+        <h2 class="features-title">
+          <span class="features-title-prefix">&gt;</span>
+          核心能力
+        </h2>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28">
+                <polyline points="16 18 22 12 16 6"/>
+                <polyline points="8 6 2 12 8 18"/>
+              </svg>
+            </div>
+            <h3 class="feature-title">在线代码编辑器</h3>
+            <p class="feature-desc">集成 Ace Editor，支持 C++ 语法高亮、代码补全，无需本地 IDE 即可编写代码。</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+            </div>
+            <h3 class="feature-title">实时判题反馈</h3>
+            <p class="feature-desc">提交后自动编译运行，逐用例比对输出，返回 AC / WA / TLE / RE / CE 详细结果。</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
+              </svg>
+            </div>
+            <h3 class="feature-title">题目管理后台</h3>
+            <p class="feature-desc">管理员可创建、编辑、删除题目，配置测试用例和题解，灵活管理题库内容。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="how-it-works">
+      <div class="how-it-works-inner">
+        <h2 class="how-it-works-title">
+          <span class="features-title-prefix">&gt;</span>
+          使用流程
+        </h2>
+        <p class="how-it-works-subtitle">从选题到获得结果，仅需四步</p>
+
+        <div class="steps">
+          <div class="step-item">
+            <div class="step-number">1</div>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="26" height="26">
+                <rect x="2" y="2" width="20" height="20" rx="3"/>
+                <line x1="8" y1="8" x2="16" y2="8"/>
+                <line x1="8" y1="12" x2="16" y2="12"/>
+                <line x1="8" y1="16" x2="12" y2="16"/>
+              </svg>
+            </div>
+            <h3 class="step-title">选择题目</h3>
+            <p class="step-desc">浏览题目列表，按难度（Easy / Medium / Hard）筛选，点击进入详情页查看完整描述。</p>
+          </div>
+
+          <div class="step-connector">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </div>
+
+          <div class="step-item">
+            <div class="step-number">2</div>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="26" height="26">
+                <polyline points="16 18 22 12 16 6"/>
+                <polyline points="8 6 2 12 8 18"/>
+              </svg>
+            </div>
+            <h3 class="step-title">编写代码</h3>
+            <p class="step-desc">在集成的 Ace 编辑器中编写 C++ 代码，支持语法高亮、自动补全，提供代码模板。</p>
+          </div>
+
+          <div class="step-connector">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </div>
+
+          <div class="step-item">
+            <div class="step-number">3</div>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="26" height="26">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+            </div>
+            <h3 class="step-title">提交判题</h3>
+            <p class="step-desc">点击提交后，后端自动使用 g++ 编译代码，并以多组测试用例逐一运行、比对输出。</p>
+          </div>
+
+          <div class="step-connector">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </div>
+
+          <div class="step-item">
+            <div class="step-number">4</div>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="26" height="26">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="8 12 11 15 16 9"/>
+              </svg>
+            </div>
+            <h3 class="step-title">获取结果</h3>
+            <p class="step-desc">即时查看判题结果：AC（通过）/ WA（答案错）/ TLE（超时）/ RE（运行时错）/ CE（编译错）。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="highlights">
+      <div class="highlights-inner">
+        <h2 class="features-title">
+          <span class="features-title-prefix">&gt;</span>
+          平台特色
+        </h2>
+
+        <div class="highlights-grid">
+          <div class="highlight-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="22" height="22">
+              <line x1="8" y1="6" x2="21" y2="6"/>
+              <line x1="8" y1="12" x2="21" y2="12"/>
+              <line x1="8" y1="18" x2="21" y2="18"/>
+              <line x1="3" y1="6" x2="3.01" y2="6"/>
+              <line x1="3" y1="12" x2="3.01" y2="12"/>
+              <line x1="3" y1="18" x2="3.01" y2="18"/>
+            </svg>
+            <div>
+              <h4>难度分级</h4>
+              <p>Easy / Medium / Hard 三级难度，适合不同阶段的学习者</p>
+            </div>
+          </div>
+
+          <div class="highlight-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="22" height="22">
+              <rect x="2" y="2" width="20" height="20" rx="3"/>
+              <path d="M7 7h3l3 10h3"/>
+            </svg>
+            <div>
+              <h4>代码模板</h4>
+              <p>每道题提供 C++ 代码框架模板，降低入门门槛</p>
+            </div>
+          </div>
+
+          <div class="highlight-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="22" height="22">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="8 12 11 15 16 9"/>
+            </svg>
+            <div>
+              <h4>官方题解</h4>
+              <p>管理员可配置参考题解，帮助学习者理解解题思路</p>
+            </div>
+          </div>
+
+          <div class="highlight-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="22" height="22">
+              <rect x="3" y="11" width="18" height="11" rx="2"/>
+              <path d="M7 11V7a5 5 0 0110 0v4"/>
+            </svg>
+            <div>
+              <h4>安全认证</h4>
+              <p>基于 Session + HttpOnly Cookie 的登录认证，保证账号安全</p>
+            </div>
+          </div>
+
+          <div class="highlight-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="22" height="22">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+              <line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+            <div>
+              <h4>进程隔离</h4>
+              <p>fork + exec 进程级隔离执行代码，CPU / 内存资源限制保护系统安全</p>
+            </div>
+          </div>
+
+          <div class="highlight-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="22" height="22">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            <div>
+              <h4>多项控制</h4>
+              <p>5 秒运行超时限制、256MB 内存上限，防止恶意代码影响服务器</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tech-stack">
+      <div class="tech-stack-inner">
+        <h2 class="features-title">
+          <span class="features-title-prefix">&gt;</span>
+          技术架构
+        </h2>
+
+        <p class="tech-stack-subtitle">前后端分离架构，轻量级 C++ 高性能后端</p>
+
+        <div class="tech-stack-grid">
+          <div class="tech-card">
+            <div class="tech-card-header">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="24" height="24">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                <line x1="8" y1="21" x2="16" y2="21"/>
+                <line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+              <span>前端</span>
+            </div>
+            <ul class="tech-list">
+              <li>HTML5 + CSS3 原生开发</li>
+              <li>Vanilla JavaScript（无框架）</li>
+              <li>Ace Editor 代码编辑器</li>
+              <li>暗色主题 + 科技风格</li>
+            </ul>
+          </div>
+
+          <div class="tech-card">
+            <div class="tech-card-header">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="24" height="24">
+                <line x1="4" y1="15" x2="20" y2="15"/>
+                <polyline points="17 10 20 15 17 20"/>
+                <rect x="2" y="4" width="20" height="8" rx="2"/>
+              </svg>
+              <span>后端</span>
+            </div>
+            <ul class="tech-list">
+              <li>C++17 + CMake 构建</li>
+              <li>cpp-httplib HTTP 服务</li>
+              <li>JSON 格式 REST API</li>
+              <li>bcrypt 密码哈希</li>
+            </ul>
+          </div>
+
+          <div class="tech-card">
+            <div class="tech-card-header">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="24" height="24">
+                <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+              </svg>
+              <span>数据 &amp; 执行</span>
+            </div>
+            <ul class="tech-list">
+              <li>MySQL 数据持久化</li>
+              <li>进程池连接管理</li>
+              <li>g++ 编译 + 进程执行</li>
+              <li>资源限制 (CPU / 内存)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="cta-section-inner">
+        <h2 class="cta-section-title">准备好开始编程了吗？</h2>
+        <p class="cta-section-desc">注册账号即可开始刷题，支持 C++17 标准，即时判题反馈。</p>
+        <div class="cta-section-actions">
+          <a href="/problem_list.html" class="hero-btn-primary" id="cta-start">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+            开始刷题
+          </a>
+          <a href="/register.html" class="hero-btn-secondary" id="cta-register">没有账号？立即注册</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="landing-footer">
+      <div class="landing-footer-inner">
+        <div class="landing-footer-brand">
+          <svg viewBox="0 0 40 40" fill="none" width="24" height="24">
+            <rect x="2" y="2" width="36" height="36" rx="8" stroke="currentColor" stroke-width="2.5" fill="none"/>
+            <path d="M12 26L12 14L18 20L24 14L28 20L28 26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <line x1="10" y1="30" x2="30" y2="30" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          OJ System
+        </div>
+        <p class="landing-footer-text">
+          Powered by <span class="landing-footer-accent">C++</span> &amp; cpp-httplib &middot; MySQL &middot; Ace Editor
+        </p>
+      </div>
+    </footer>
   </main>
-
-  <p class="auth-tagline">
-    Powered by <span>C++</span> &amp; cpp-httplib
-  </p>
 
   <script src="/js/api.js"></script>
   <script src="/js/auth.js"></script>
-  <script src="/js/problem.js"></script>
+  <script>
+    (function() {
+      var user = auth.getUser();
+      var heroCta = document.getElementById('hero-cta');
+      var heroLoginBtn = document.getElementById('hero-login-btn');
+      var navLoginLink = document.getElementById('nav-login-link');
+      var navRegisterLink = document.getElementById('nav-register-link');
+      var navProblemsLink = document.getElementById('nav-problems-link');
+
+      if (user) {
+        navLoginLink.style.display = 'none';
+        navRegisterLink.style.display = 'none';
+        navProblemsLink.style.display = 'inline-flex';
+        heroLoginBtn.textContent = '欢迎回来，' + user.username;
+        heroLoginBtn.href = '/problem_list.html';
+        var ctaRegister = document.getElementById('cta-register');
+        if (ctaRegister) {
+          ctaRegister.style.display = 'none';
+        }
+      }
+
+      api.getProblems().then(function(problems) {
+        document.getElementById('problem-count').textContent = problems ? problems.length : 0;
+      }).catch(function() {
+        document.getElementById('problem-count').textContent = '--';
+      });
+    })();
+  </script>
 </body>
 </html>

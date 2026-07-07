@@ -144,7 +144,7 @@
     var passwordError = document.getElementById('password-error');
 
     if (auth.isLoggedIn()) {
-      window.location.href = '/index.html';
+      window.location.href = '/problem_list.html';
     }
 
     function showAlert(type, message) {
@@ -256,7 +256,7 @@
       try {
         var data = await api.login(username, password);
         auth.saveUser(data);
-        window.location.href = '/index.html';
+        window.location.href = '/problem_list.html';
       } catch (err) {
         var msg = err.message || '登录失败，请重试';
         showAlert('error', msg);
