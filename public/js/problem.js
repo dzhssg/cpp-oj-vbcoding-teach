@@ -4,6 +4,9 @@ var difficultyConfig = {
   'Hard':   { cls: 'difficulty-hard',   label: 'Hard' }
 };
 
+var allProblems = [];
+var currentFilter = 'All';
+
 var stateLoading = document.getElementById('state-loading');
 var stateError   = document.getElementById('state-error');
 var stateEmpty   = document.getElementById('state-empty');
@@ -11,6 +14,8 @@ var tableWrapper = document.getElementById('table-wrapper');
 var tableBody    = document.getElementById('table-body');
 var errMessage   = document.getElementById('error-message');
 var btnRetry     = document.getElementById('btn-retry');
+var filterBar    = document.getElementById('filter-bar');
+var filterCount  = document.getElementById('filter-count');
 
 function hideAll() {
   stateLoading.classList.remove('visible');
@@ -21,24 +26,44 @@ function hideAll() {
 
 function showLoading() {
   hideAll();
+  filterBar.style.display = 'none';
   stateLoading.classList.add('visible');
 }
 
 function showError(msg) {
   hideAll();
+  filterBar.style.display = 'none';
   errMessage.textContent = msg || '无法获取题目数据';
   stateError.classList.add('visible');
 }
 
 function showEmpty() {
   hideAll();
+  filterBar.style.display = 'none';
   stateEmpty.classList.add('visible');
 }
 
-function showTable(problems) {
+function renderTable() {
+  var problems = allProblems;
+  if (currentFilter !== 'All') {
+    problems = allProblems.filter(function(p) {
+      return p.difficulty === currentFilter;
+    });
+  }
+
   hideAll();
+
+  filterBar.style.display = 'flex';
+  filterCount.innerHTML = '共 <strong>' + problems.length + '</strong> 道题目';
+
   if (!problems || problems.length === 0) {
+    var isEmpty = (currentFilter !== 'All')
+      ? '当前筛选条件下暂无题目'
+      : '题目列表为空，请联系管理员添加题目';
+
+    stateEmpty.querySelector('p:last-child').textContent = isEmpty;
     showEmpty();
+    filterBar.style.display = 'flex';
     return;
   }
 
@@ -66,12 +91,15 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
-function delegateClick(parent, selector, handler) {
-  parent.addEventListener('click', function(e) {
-    var target = e.target.closest(selector);
-    if (target && parent.contains(target)) {
-      handler(target);
-    }
+function setupFilters() {
+  var pills = filterBar.querySelectorAll('.filter-pill');
+  pills.forEach(function(pill) {
+    pill.addEventListener('click', function() {
+      pills.forEach(function(p) { p.classList.remove('active'); });
+      pill.classList.add('active');
+      currentFilter = pill.getAttribute('data-filter');
+      renderTable();
+    });
   });
 }
 
@@ -79,7 +107,9 @@ async function loadProblems() {
   showLoading();
   try {
     var data = await api.getProblems();
-    showTable(data);
+    allProblems = data || [];
+    currentFilter = 'All';
+    renderTable();
   } catch (err) {
     showError(err.message);
   }
@@ -113,6 +143,7 @@ btnRetry.addEventListener('click', function() {
   loadProblems();
 });
 
+setupFilters();
 setupNavbar();
 
 if (auth.requireAuth()) {

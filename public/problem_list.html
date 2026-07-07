@@ -68,6 +68,23 @@
       <div class="page-header">
         <h1 class="page-title">Problems</h1>
         <p class="page-subtitle">&gt; problem_list --format table</p>
+
+        <div class="filter-bar" id="filter-bar" style="display:none;">
+          <button class="filter-pill active" data-filter="All">全部</button>
+          <button class="filter-pill" data-filter="Easy">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>
+            Easy
+          </button>
+          <button class="filter-pill" data-filter="Medium">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            Medium
+          </button>
+          <button class="filter-pill" data-filter="Hard">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Hard
+          </button>
+          <span class="filter-count" id="filter-count"></span>
+        </div>
       </div>
 
       <div id="state-loading" class="state-message visible">

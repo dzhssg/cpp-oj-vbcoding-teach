@@ -31,3 +31,5 @@
 [2026-07-07 14:37:37.415] [INFO] [PROBLEM] Inserted problem id=108 with 3 test cases
 [2026-07-07 14:37:38.382] [INFO] [PROBLEM] Inserted problem id=109 with 4 test cases
 [2026-07-07 14:37:39.629] [INFO] [PROBLEM] Inserted problem id=110 with 5 test cases
+[2026-07-07 14:54:43.664] [INFO] [SESSION] Cleaned up 3 expired sessions
+[2026-07-07 14:54:43.664] [INFO] [AUTH] Cleaned up 3 expired sessions
