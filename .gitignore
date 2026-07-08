@@ -1,4 +1,7 @@
 build/
 ystemctl start mysqld
 .cache/
-.opencode/
+.opencode/ 
+*.yml
+console-*
+page-*
