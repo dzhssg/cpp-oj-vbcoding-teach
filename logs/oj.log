@@ -86,3 +86,14 @@
 [2026-07-08 14:56:39.211] [INFO] [PROBLEM] Inserted problem id=115 with 1 test cases
 [2026-07-08 14:56:46.178] [INFO] [PROBLEM] Deleted problem id=115
 [2026-07-08 15:37:21.106] [INFO] [SESSION] Created session for user_id=125
+[2026-07-08 15:44:22.017] [INFO] [USER] Inserted user id=133
+[2026-07-08 15:44:30.266] [INFO] [SESSION] Created session for user_id=133
+[2026-07-08 15:47:23.177] [INFO] [SESSION] Created session for user_id=133
+[2026-07-08 16:14:37.670] [INFO] [SESSION] Created session for user_id=125
+[2026-07-08 16:31:27.664] [INFO] [MAIN] Starting cpp-oj server...
+[2026-07-08 16:31:27.809] [INFO] [DB POOL] Initialized with 4 connections (requested 4)
+[2026-07-08 16:31:27.809] [INFO] [MAIN] Database connection pool initialized
+[2026-07-08 16:31:27.809] [INFO] [AUTH] Started background session cleanup (interval=1800s)
+[2026-07-08 16:31:27.809] [INFO] [SERVER] Listening on 0.0.0.0:8080
+[2026-07-08 16:32:45.139] [INFO] [SESSION] Created session for user_id=1
+[2026-07-08 16:39:34.507] [INFO] [SESSION] Created session for user_id=1
