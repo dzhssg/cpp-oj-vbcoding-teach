@@ -180,12 +180,12 @@ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 - [X] 题⽬详情⻚⾯（描述 + 在线编辑器）
 - [X] 提交结果展⽰
 - [X] 管理后台（新增/删除题⽬）
-- [ ] 大屏落地页
+- [X] 大屏落地页
 ### Phase 6 - 安全与部署
-- [ ] 管理员权限校验
-- [ ] ⽤⼾认证（Session/Cookie）
-- [ ] 基础输⼊校验
-- [ ] 部署⽂档
+- [X] 管理员权限校验
+- [X] ⽤⼾认证（Session/Cookie）
+- [X] 基础输⼊校验
+- [X] 部署⽂档,README文档
 ---
 ## 7. 验收标准
 | # | 标准 |

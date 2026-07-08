@@ -40,7 +40,6 @@
 [2026-07-07 17:48:17.345] [INFO] [SESSION] Destroyed session 10a572401bd888b01b763b9833920935327c588f1c4a6a5e9f33dd1ba535d8ad
 [2026-07-07 17:49:33.601] [INFO] [SESSION] Created session for user_id=125
 [2026-07-07 17:50:17.546] [WARN] [SERVICE] Problem not found: id=99999
-[2026-07-07 17:50:17.546] [WARN] [SERVICE] Problem not found: id=99999
 [2026-07-07 17:55:49.682] [INFO] [PROBLEM] Inserted problem id=111 with 1 test cases
 [2026-07-07 17:56:39.678] [INFO] [PROBLEM] Deleted problem id=111
 [2026-07-07 17:56:57.360] [INFO] [SESSION] Destroyed session a68bb308c2e5e39aab45bd6709fbf621f378ab2b7e388d3ab8f3573341d7318e
@@ -55,3 +54,34 @@
 [2026-07-08 06:54:54.194] [INFO] [AUTH] Cleaned up 3 expired sessions
 [2026-07-08 10:24:56.673] [INFO] [SESSION] Cleaned up 2 expired sessions
 [2026-07-08 10:24:56.673] [INFO] [AUTH] Cleaned up 2 expired sessions
+[2026-07-08 14:47:43.970] [INFO] [USER] Inserted user id=128
+[2026-07-08 14:48:49.792] [INFO] [SESSION] Created session for user_id=125
+[2026-07-08 14:48:58.802] [INFO] [SESSION] Destroyed session d295939ae517fc90f62a2f687a37b79ea1db73e9bb8fc46dc245ce72dd405d2e
+[2026-07-08 14:49:49.697] [INFO] [SESSION] Created session for user_id=125
+[2026-07-08 14:50:22.066] [WARN] [SERVICE] Problem not found: id=99999
+[2026-07-08 14:50:29.363] [INFO] [SESSION] Destroyed session 6925e7dd2a8c995bf8e3422572a8064c87565aa0d97ec894702fbbf81d757edb
+[2026-07-08 14:50:58.353] [INFO] [SESSION] Created session for user_id=125
+[2026-07-08 14:53:10.209] [INFO] [PROBLEM] Inserted problem id=112 with 1 test cases
+[2026-07-08 14:53:28.893] [INFO] [PROBLEM] Deleted problem id=112
+[2026-07-08 14:53:46.878] [INFO] [SESSION] Destroyed session eac2e75e699a8c2878e608628ad6f862d2237682d2c7266df7ab191b67e7472e
+[2026-07-08 14:54:11.501] [INFO] [USER] Inserted user id=129
+[2026-07-08 14:54:32.984] [INFO] [SESSION] Created session for user_id=129
+[2026-07-08 14:55:55.232] [INFO] [SESSION] Created session for user_id=125
+[2026-07-08 14:55:55.699] [INFO] [USER] Inserted user id=130
+[2026-07-08 14:55:55.980] [INFO] [SESSION] Created session for user_id=130
+[2026-07-08 14:55:56.117] [INFO] [PROBLEM] Inserted problem id=113 with 1 test cases
+[2026-07-08 14:56:02.569] [INFO] [PROBLEM] Deleted problem id=113
+[2026-07-08 14:56:35.742] [INFO] [USER] Inserted user id=131
+[2026-07-08 14:56:36.506] [INFO] [SESSION] Created session for user_id=125
+[2026-07-08 14:56:36.909] [INFO] [SESSION] Destroyed session fbec43a051689fd5452d1150a8f3efafd9ee7e0147dc6ca676cffe544ab2a44f
+[2026-07-08 14:56:37.135] [WARN] [SERVICE] Problem not found: id=99999
+[2026-07-08 14:56:37.452] [INFO] [SESSION] Created session for user_id=125
+[2026-07-08 14:56:37.631] [INFO] [PROBLEM] Inserted problem id=114 with 1 test cases
+[2026-07-08 14:56:37.890] [INFO] [PROBLEM] Deleted problem id=114
+[2026-07-08 14:56:38.014] [INFO] [PROBLEM] Deleted problem id=99999
+[2026-07-08 14:56:38.014] [WARN] [SERVICE] Failed to delete problem: id=99999
+[2026-07-08 14:56:38.014] [WARN] [SERVICE] Failed to delete problem: id=99999
+[2026-07-08 14:56:38.474] [INFO] [USER] Inserted user id=132
+[2026-07-08 14:56:38.853] [INFO] [SESSION] Created session for user_id=132
+[2026-07-08 14:56:39.211] [INFO] [PROBLEM] Inserted problem id=115 with 1 test cases
+[2026-07-08 14:56:46.178] [INFO] [PROBLEM] Deleted problem id=115
