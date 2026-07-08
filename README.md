@@ -146,7 +146,7 @@ cmake --build build -j
 # 6. 启动服务
 ./build/oj_server
 
-# 浏览器访问 http://localhost:8080/login.html
+# 浏览器访问 http://8.138.161.148:8080/
 ```
 
 ---
