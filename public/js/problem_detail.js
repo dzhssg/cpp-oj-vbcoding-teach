@@ -159,15 +159,49 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
-function initEditor() {
+function isMobileViewport() {
+  return window.matchMedia && window.matchMedia('(max-width: 900px)').matches;
+}
+
+function ensureEditorHeight() {
+  var container = document.querySelector('.editor-container');
+  var editorEl = document.getElementById('editor');
+  if (isMobileViewport()) {
+    var h = Math.max(360, Math.round(window.innerHeight * 0.6)) + 'px';
+    if (container) {
+      container.style.flex = 'none';
+      container.style.height = h;
+      container.style.minHeight = '360px';
+    }
+    if (editorEl) {
+      editorEl.style.height = h;
+      editorEl.style.minHeight = '360px';
+    }
+  }
+}
+
+function initEditorFallback() {
+  var fallback = document.createElement('textarea');
+  fallback.id = 'editor-fallback';
+  fallback.style.cssText = 'width:100%;height:100%;min-height:360px;box-sizing:border-box;background:#0B1121;color:#F8FAFC;border:none;padding:16px;font-family:monospace;font-size:14px;resize:none;outline:none;';
+  fallback.value = templateCode || '#include <iostream>\n\nint main() {\n  \n  return 0;\n}\n';
+  var editorEl = document.getElementById('editor');
+  if (editorEl) editorEl.style.display = 'none';
+  document.querySelector('.editor-container').appendChild(fallback);
+  editor = fallback;
+}
+
+function initEditor(retries) {
+  ensureEditorHeight();
+
   if (typeof ace === 'undefined') {
-    console.warn('Ace.js not loaded, using textarea fallback');
-    var fallback = document.createElement('textarea');
-    fallback.id = 'editor-fallback';
-    fallback.style.cssText = 'width:100%;height:100%;background:#0B1121;color:#F8FAFC;border:none;padding:16px;font-family:monospace;font-size:14px;resize:none;outline:none;';
-    fallback.value = templateCode || '#include <iostream>\n\nint main() {\n  \n  return 0;\n}\n';
-    document.querySelector('.editor-container').appendChild(fallback);
-    editor = fallback;
+    retries = (retries == null) ? 0 : retries;
+    if (retries < 40) {
+      setTimeout(function() { initEditor(retries + 1); }, 150);
+      return;
+    }
+    console.warn('Ace.js not loaded after waiting, using textarea fallback');
+    initEditorFallback();
     return;
   }
 
@@ -189,6 +223,20 @@ function initEditor() {
 
   editor.setValue(templateCode || '#include <iostream>\n\nint main() {\n  \n  return 0;\n}\n', -1);
   editor.clearSelection();
+
+  var doResize = function() {
+    ensureEditorHeight();
+    editor.resize(true);
+  };
+  setTimeout(doResize, 0);
+  setTimeout(doResize, 300);
+  setTimeout(doResize, 800);
+  window.addEventListener('resize', doResize);
+  window.addEventListener('orientationchange', function() { setTimeout(doResize, 200); });
+  if (window.ResizeObserver) {
+    var ro = new ResizeObserver(function() { editor.resize(true); });
+    ro.observe(document.querySelector('.editor-container'));
+  }
 }
 
 function setSubmitLoading(btn, state) {

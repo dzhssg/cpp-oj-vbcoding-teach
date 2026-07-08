@@ -97,3 +97,12 @@
 [2026-07-08 16:31:27.809] [INFO] [SERVER] Listening on 0.0.0.0:8080
 [2026-07-08 16:32:45.139] [INFO] [SESSION] Created session for user_id=1
 [2026-07-08 16:39:34.507] [INFO] [SESSION] Created session for user_id=1
+[2026-07-08 16:53:05.086] [INFO] [USER] Inserted user id=2
+[2026-07-08 16:53:12.485] [INFO] [SESSION] Created session for user_id=2
+[2026-07-08 16:59:16.586] [INFO] [SESSION] Created session for user_id=2
+[2026-07-08 17:06:58.334] [INFO] [SESSION] Created session for user_id=1
+[2026-07-08 17:10:35.957] [INFO] [SESSION] Created session for user_id=1
+[2026-07-08 17:13:43.392] [INFO] [SESSION] Created session for user_id=1
+[2026-07-08 17:14:14.886] [INFO] [SESSION] Created session for user_id=1
+[2026-07-08 17:15:06.123] [INFO] [SESSION] Destroyed session 5ef62604acc2efb5bd96ffa07728eb8bbde5dc09fb34b87f422afc1681a48448
+[2026-07-08 17:15:15.849] [INFO] [SESSION] Created session for user_id=2
